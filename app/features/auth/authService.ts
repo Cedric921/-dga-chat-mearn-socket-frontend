@@ -1,4 +1,4 @@
-import { iUser } from '../../../utils/types';
+import { iUser, iUserLoginInput } from '../../../utils/types';
 import axios from 'axios';
 
 // api
@@ -13,17 +13,13 @@ const registerUser = async () => {
 		username: 'arick',
 	};
 	const res = await axios.post(`${API_URL}/api/v1/users/signup`, user);
-	console.log(res.status );
+	console.log(res.status);
 	localStorage.setItem('chat-gda-user', JSON.stringify(res.data.token));
 	return res.data;
 };
 
 //  login func
-const loginUser = async () => {
-	const user = {
-		username: 'vb',
-		password: '123456',
-	};
+const loginUser = async (user: iUserLoginInput) => {
 	const res = await axios.post(`${API_URL}/api/v1/users/login`, user);
 
 	localStorage.setItem('chat-gda-user', JSON.stringify(res.data.token));

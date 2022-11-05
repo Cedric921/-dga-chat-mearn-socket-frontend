@@ -18,7 +18,7 @@ const loginPage: NextPage = () => {
 	};
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		dispatch(login())
+		dispatch(login(userInput))
 	};
 	return (
 		<div className='h-screen w-screen bg-red-800'>

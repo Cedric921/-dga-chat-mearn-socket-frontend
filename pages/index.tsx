@@ -16,7 +16,6 @@ export default function Home() {
 			token: 'lsls',
 		};
 		// dispatch(register());
-		dispatch(login());
 	}, []);
 	return (
 		<div className={styles.container}>

@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
-import { iUser } from '../../../utils/types';
+import { iUserLoginInput } from '../../../utils/types';
 
 //  initial state
+
+const user = localStorage.getItem('chat-gda-user');
 const initialState = {
-	user: null,
+	user: JSON.parse(user!) || null,
 	isError: false,
 	isLoading: false,
 	isSuccess: false,
@@ -12,14 +14,17 @@ const initialState = {
 };
 
 // actions
-export const login = createAsyncThunk('auth/login', async (_, thunkAPI) => {
-	try {
-		return await authService.loginUser();
-	} catch (error) {
-		const message = error;
-		return thunkAPI.rejectWithValue(message);
+export const login = createAsyncThunk(
+	'auth/login',
+	async (user: iUserLoginInput, thunkAPI) => {
+		try {
+			return await authService.loginUser(user);
+		} catch (error) {
+			const message = error;
+			return thunkAPI.rejectWithValue(message);
+		}
 	}
-});
+);
 
 export const register = createAsyncThunk(
 	'auth/register',

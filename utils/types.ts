@@ -4,3 +4,8 @@ export interface iUser {
 	lastname: string;
 	token: string;
 }
+
+export interface iUserLoginInput {
+	username: string;
+	password: string;
+}
