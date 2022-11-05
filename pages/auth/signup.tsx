@@ -1,11 +1,14 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const signup: NextPage = () => {
 	const [userInput, setUserInput] = useState({
+		email: '',
 		username: '',
 		password: '',
 	});
+	const router = useRouter();
 
 	const handleChange = (e: any) => {
 		setUserInput({ ...userInput, [e.target.name]: e.target.value });
@@ -16,16 +19,16 @@ const signup: NextPage = () => {
 	};
 	return (
 		<div className='h-screen w-screen bg-red-800'>
-			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5'>
+			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-10 px-5'>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
 					<div className='w-full md:w-1/2 h-full bg-green-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
-						<h2 className='text-3xl font-bold text-red-800'>Se connecter</h2>
+						<h2 className='text-2xl font-bold text-red-800'>Creer un compte</h2>
 						<div className='my-2 flex flex-col justify-center'>
-							<label htmlFor='username'>Email</label>
+							<label htmlFor='email'>Email</label>
 							<input
 								type='text'
-								name='username'
-								id='username'
+								name='email'
+								id='email'
 								placeholder='cedric@gmail.com'
 								className='p-2 border-2 rounded-md'
 								onChange={handleChange}
@@ -53,9 +56,20 @@ const signup: NextPage = () => {
 								onChange={handleChange}
 							/>
 						</div>
+						<div className='my-2 flex flex-col justify-center'>
+							<label htmlFor='password'>valider le mot de passe</label>
+							<input
+								type='password2'
+								name='password2'
+								id='password2'
+								placeholder='1234567890'
+								className='p-2 border-2 rounded-md'
+								onChange={handleChange}
+							/>
+						</div>
 						<div className='my-3 flex flex-col justify-center '>
 							<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
-								Connexion
+								Enregistrer
 							</button>
 						</div>
 					</div>
@@ -64,8 +78,11 @@ const signup: NextPage = () => {
 						<p className='text-center text-white text-sm m-4'>
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit.
 						</p>
-						<button className=' border border-white m-5 py-2 px-5 rounded-md text-slate-50 '>
-							creer un compte
+						<button
+							className=' border border-white m-5 py-2 px-5 rounded-md text-slate-50 '
+							onClick={() => router.push('/auth/login')}
+						>
+							se connecter
 						</button>
 					</div>
 				</div>
