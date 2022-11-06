@@ -4,9 +4,9 @@ import { iUserLoginInput } from '../../../utils/types';
 
 //  initial state
 
-const user = localStorage.getItem('chat-gda-user');
+// const user = localStorage.getItem('chat-gda-user');
 const initialState = {
-	user: JSON.parse(user!) || null,
+	user:  null,
 	isError: false,
 	isLoading: false,
 	isSuccess: false,
@@ -19,8 +19,13 @@ export const login = createAsyncThunk(
 	async (user: iUserLoginInput, thunkAPI) => {
 		try {
 			return await authService.loginUser(user);
-		} catch (error) {
-			const message = error;
+		} catch (error: any) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
 			return thunkAPI.rejectWithValue(message);
 		}
 	}
@@ -31,8 +36,14 @@ export const register = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			return await authService.registerUser();
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
+		} catch (error: any) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
 		}
 	}
 );

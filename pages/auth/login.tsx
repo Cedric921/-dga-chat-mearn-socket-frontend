@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../app/features/auth/authSlice'
+import { login } from '../../app/features/auth/authSlice';
 import { AppDispatch } from '../../app/store';
 
 const loginPage: NextPage = () => {
@@ -12,21 +12,24 @@ const loginPage: NextPage = () => {
 	});
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
+	const { user, isSuccess } = useSelector((state: any) => state.auth);
 
 	const handleChange = (e: any) => {
 		setUserInput({ ...userInput, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		dispatch(login(userInput))
+		dispatch(login(userInput));
 	};
+
+	useEffect(() => {
+		if (user || isSuccess) router.push('/');
+	}, [isSuccess]);
 	return (
 		<div className='h-screen w-screen bg-red-800'>
 			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5'>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
-					<div
-						className='w-full md:w-1/2 h-full bg-green-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'
-					>
+					<div className='w-full md:w-1/2 h-full bg-green-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
 						<form action='' onSubmit={handleSubmit}>
 							<h2 className='text-3xl font-bold text-red-800'>Se connecter</h2>
 							<div className='my-3 flex flex-col justify-center'>
