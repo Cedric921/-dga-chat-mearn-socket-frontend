@@ -36,7 +36,8 @@ export const getMessages = createAsyncThunk(
 		const token = usersData.token;
 		const ids = {
 			sender:
-				JSON.parse(localStorage.getItem('chat-gda-user')!) || usersData.sender,
+				JSON.parse(localStorage.getItem('chat-gda-user')!)._id ||
+				usersData.sender,
 			receiver: usersData.receiver,
 		};
 		try {

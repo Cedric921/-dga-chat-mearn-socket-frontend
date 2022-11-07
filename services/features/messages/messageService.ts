@@ -11,7 +11,6 @@ const getUsers = async (token: string) => {
 		},
 	};
 	const res = await axios.get(`${API_URL}/api/v1/users`, config);
-	console.log(res.data);
 	return res.data;
 };
 

@@ -21,7 +21,7 @@ const loginUser = async (user: iUserLoginInput) => {
 
 // logout func
 const logout = async () => {
-	localStorage.removeItem('user');
+	localStorage.removeItem('chat-gda-user');
 };
 
 const authService = { loginUser, registerUser, logout };
