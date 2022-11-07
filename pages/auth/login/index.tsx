@@ -30,7 +30,7 @@ const loginPage: NextPage = () => {
 	useEffect(() => {
 		if (isError) toast.error(errorMessage);
 		if (user || isSuccess) {
-			toast.success(`Login as ${user.name}`);
+			toast.success(`Login as ${user.name} ${user.lastname}`);
 			router.push('/');
 		}
 	}, [isSuccess, isError]);
@@ -63,9 +63,15 @@ const loginPage: NextPage = () => {
 									onChange={handleChange}
 								/>
 							</div>
-							<div className='my-3 flex flex-col justify-center '>
+							<div className='my-3 flex gap-2  justify-center '>
 								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
 									Connexion
+								</button>
+								<button
+									className='flex md:hidden border-blue-700 py-2 px-5 rounded-md text-blue-700 w-3/6 bg-slate-100 border-2'
+									onClick={() => router.push('/auth/signup')}
+								>
+									creer un compte
 								</button>
 							</div>
 						</form>

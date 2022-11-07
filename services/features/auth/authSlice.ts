@@ -56,11 +56,18 @@ export const register = createAsyncThunk(
 	}
 );
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+	localStorage.removeItem('chat-gda-user');
+	return await authService.logout();
+});
+
 const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		reset: () => initialState,
+		reset: () => {
+			return initialState;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -99,6 +106,9 @@ const authSlice = createSlice({
 				state.user = null;
 				state.isError = true;
 				state.errorMessage = action.payload as string;
+			})
+			.addCase(logout.fulfilled, (state) => {
+				state.user = null;
 			});
 	},
 });
