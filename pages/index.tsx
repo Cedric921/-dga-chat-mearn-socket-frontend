@@ -1,11 +1,13 @@
+// 'use client';
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register } from '../app/features/auth/authSlice';
-import { getUsers } from '../app/features/messages/messageSlice';
+import { login, register } from '../services/features/auth/authSlice';
+import { getUsers } from '../services/features/messages/messageSlice';
 import { useEffect } from 'react';
-import { AppDispatch } from '../app/store';
+import { AppDispatch } from '../services/store';
 
 export default function Home() {
 	const router = useRouter();
@@ -17,9 +19,9 @@ export default function Home() {
 		if (user) dispatch(getUsers(user.token));
 	}, [user, dispatch]);
 
-	useEffect(() => {
-		dispatch(getUsers(user.token));
-	}, [user]);
+	// useEffect(() => {
+	// 	dispatch(getUsers(user.token));
+	// }, [user]);
 
 	return (
 		<div className={styles.container}>
@@ -29,10 +31,15 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main>
-				<h2>
-					{' '}
-					Hello {user && user.lastname} {user && user.name}
-				</h2>
+				<h2>{/* Hello {user && user.lastname} {user && user.name} */}</h2>
+				{users ? (
+					<>
+						{users &&
+							users.map((user: any) => <p key={user.id}>{user.name}</p>)}
+					</>
+				) : (
+					<p>No user found</p>
+				)}
 			</main>
 		</div>
 	);

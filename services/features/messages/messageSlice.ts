@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import messagesSerives from './messageService';
+import { iUsersIDMessage } from '../../../utils/types';
 
 const initialState = {
 	messages: null,
@@ -28,6 +29,28 @@ export const getUsers = createAsyncThunk(
 	}
 );
 
+// get messages from user connected
+export const getMessages = createAsyncThunk(
+	'message/getMessages',
+	async (usersData: any, thunkAPI) => {
+		const token = usersData.token;
+		const ids = {
+			sender:
+				JSON.parse(localStorage.getItem('chat-gda-user')!) || usersData.sender,
+			receiver: usersData.receiver,
+		};
+		try {
+			return await messagesSerives.getMessages(ids, token);
+		} catch (error: any) {
+			const message =
+				(error.response && error.response.data && error.reponse.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	}
+);
+
 const messageSlice = createSlice({
 	name: 'message',
 	initialState,
@@ -43,7 +66,7 @@ const messageSlice = createSlice({
 			})
 			.addCase(getUsers.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.users = action.payload;
+				state.users = action.payload.users;
 				state.isSuccess = true;
 				state.isError = false;
 			})

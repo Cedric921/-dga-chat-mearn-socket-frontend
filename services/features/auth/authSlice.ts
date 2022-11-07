@@ -1,12 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
-import { iUserLoginInput } from '../../../utils/types';
+import { iUserLoginInput, iUserSignupInput } from '../../../utils/types';
 
 //  initial state
+let user;
+if (typeof window !== 'undefined') {
+	if (localStorage.getItem('chat-gda-user')) {
+		user = JSON.parse(localStorage.getItem('chat-gda-user')!);
+	} else {
+		user = null;
+	}
+}
 
-// const user = localStorage.getItem('chat-gda-user');
+// const user = JSON.parse(localStorage.getItem('chat-gda-user')!);
 const initialState = {
-	user:  null,
+	user: user || null,
 	isError: false,
 	isLoading: false,
 	isSuccess: false,
@@ -33,9 +41,9 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
 	'auth/register',
-	async (_, thunkAPI) => {
+	async (userData: iUserSignupInput, thunkAPI) => {
 		try {
-			return await authService.registerUser();
+			return await authService.registerUser(userData);
 		} catch (error: any) {
 			const message =
 				(error.response &&

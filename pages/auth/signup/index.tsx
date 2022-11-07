@@ -1,3 +1,5 @@
+'use client';
+
 import { NextPage } from 'next';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -18,11 +20,13 @@ const signup: NextPage = () => {
 		console.log(userInput);
 	};
 	return (
-		<div className='h-screen w-screen bg-red-800'>
+		<div className='h-screen w-screen bg-gray-900'>
 			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-10 px-5'>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
-					<div className='w-full md:w-1/2 h-full bg-green-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
-						<h2 className='text-2xl font-bold text-red-800'>Creer un compte</h2>
+					<div className='w-full md:w-1/2 h-full bg-slate-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
+						<h2 className='text-2xl font-bold text-blue-800'>
+							Creer un compte
+						</h2>
 						<div className='my-2 flex flex-col justify-center'>
 							<label htmlFor='email'>Email</label>
 							<input
@@ -73,8 +77,8 @@ const signup: NextPage = () => {
 							</button>
 						</div>
 					</div>
-					<div className='hidden md:flex flex-col w-full md:w-1/2 bg-blue-600  justify-center items-center rounded-r-lg p-20'>
-						<h2 className='text-4xl text-red-900 font-bold'>Crypto chat</h2>
+					<div className='hidden md:flex flex-col w-full md:w-1/2 bg-blue-900  justify-center items-center rounded-r-lg p-20'>
+						<h2 className='text-4xl text-slate-50 font-bold'>Crypto chat</h2>
 						<p className='text-center text-white text-sm m-4'>
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit.
 						</p>
