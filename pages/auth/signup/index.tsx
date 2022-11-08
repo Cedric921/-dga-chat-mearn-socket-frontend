@@ -2,12 +2,13 @@
 
 import { NextPage } from 'next';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../services/features/auth/authSlice';
 import { AppDispatch } from '../../../services/store';
 import logo from '../../../assets/images/logo.svg';
+import { toast } from 'react-toastify';
 const signup: NextPage = () => {
 	const [userInput, setUserInput] = useState({
 		email: '',
@@ -18,6 +19,9 @@ const signup: NextPage = () => {
 	});
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
+	const { user, isSuccess, isError, errorMessage } = useSelector(
+		(state: any) => state.auth
+	);
 
 	const handleChange = (e: any) => {
 		setUserInput({ ...userInput, [e.target.name]: e.target.value });
@@ -26,12 +30,24 @@ const signup: NextPage = () => {
 		e.preventDefault();
 		dispatch(register(userInput));
 	};
+
+	useEffect(() => {
+		if (isError) toast.error(errorMessage);
+		if (user && isSuccess) {
+			toast.success(
+				`create account for ${user && user.name} ${
+					user && user.lastname
+				} with success`
+			);
+			router.push('/');
+		}
+	}, [isSuccess, isError]);
 	return (
 		<div className='h-screen w-screen bg-gray-900'>
 			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-4 px-5'>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
 					<div className='w-full md:w-1/2 h-full bg-slate-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
-						<form onClick={handleSubmit}>
+						<form onSubmit={handleSubmit}>
 							<h2 className='text-2xl font-bold text-blue-800'>
 								Creer un compte
 							</h2>
@@ -42,7 +58,7 @@ const signup: NextPage = () => {
 									name='name'
 									id='name'
 									placeholder='Cedric'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -53,7 +69,7 @@ const signup: NextPage = () => {
 									name='lastname'
 									id='lastname'
 									placeholder='Karungu'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -64,7 +80,7 @@ const signup: NextPage = () => {
 									name='email'
 									id='email'
 									placeholder='cedric@gmail.com'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -75,7 +91,7 @@ const signup: NextPage = () => {
 									name='username'
 									id='username'
 									placeholder='cedric01'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -86,7 +102,7 @@ const signup: NextPage = () => {
 									name='password'
 									id='password'
 									placeholder='1234567890'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -97,7 +113,7 @@ const signup: NextPage = () => {
 									name='password2'
 									id='password2'
 									placeholder='1234567890'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -107,7 +123,7 @@ const signup: NextPage = () => {
 								</button>
 								<button
 									className='flex md:hidden border-blue-700 py-2 px-5 rounded-md text-blue-700 w-3/6 text-center bg-slate-100 border-2'
-									onClick={() => router.push('/auth/login')}
+									onClick={() => router.replace('/auth/login')}
 								>
 									Login
 								</button>

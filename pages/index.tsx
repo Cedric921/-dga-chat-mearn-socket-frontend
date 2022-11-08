@@ -12,12 +12,22 @@ import Link from 'next/link';
 import RoomAside from '../components/RoomAside';
 import AsideUsers from '../components/AsideUsers';
 import { MdMessage } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 export default function Home() {
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
-	const { user } = useSelector((state: any) => state.auth);
-	const { messages, users } = useSelector((state: any) => state.messages);
+	const {
+		user,
+		isError: isErrorUser,
+		errorMessage: errorUser,
+	} = useSelector((state: any) => state.auth);
+	const {
+		messages,
+		users,
+		isError: isErrorMessages,
+		errorMessage: errorMessages,
+	} = useSelector((state: any) => state.messages);
 
 	useEffect(() => {
 		if (!user) router.push('/auth/login');
@@ -29,7 +39,10 @@ export default function Home() {
 		router.replace('/auth/login');
 	};
 
-	// useEffect(() => {}, [user]);
+	useEffect(() => {
+		if (isErrorMessages) toast.dark(errorMessages);
+		if (isErrorUser) toast.dark(errorUser);
+	}, [isErrorMessages, isErrorUser]);
 
 	return (
 		<div className={styles.container}>
@@ -42,20 +55,25 @@ export default function Home() {
 				<RoomAside user={user} logoutUser={logoutUser} />
 
 				{/* aside for users */}
-				<AsideUsers users={users} />
+				<AsideUsers users={users} user={user} />
 
 				{/* Main messages */}
-				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 mx-2 my-2 flex flex-col items-center justify-center'>
-					<h2 className='text-3xl text-slate-100 font-extrabold m-2'>
-						Welcome <span className='text-blue-900'>{user && user?.name}</span>{' '}
-						<span className='text-blue-900'>{user && user?.lastname}</span>
-					</h2>
-					<p className='text-slate-50'>
-						Select please one contact to start a chat{' '}
-					</p>
-					<h5 className='text-8xl text-white'>
-						<MdMessage />
-					</h5>
+				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 mx-2 my-2 flex flex-col items-center justify-center text-center'>
+					{user && (
+						<>
+							<h2 className='text-3xl text-slate-100 font-extrabold m-2'>
+								Welcome{' '}
+								<span className='text-blue-900'>{user && user?.name}</span>{' '}
+								<span className='text-blue-900'>{user && user?.lastname}</span>
+							</h2>
+							<p className='text-slate-50'>
+								Select please one contact to start a chat{' '}
+							</p>
+							<h5 className='text-8xl text-white animate-bounce mt-5'>
+								<MdMessage />
+							</h5>
+						</>
+					)}
 				</div>
 			</main>
 		</div>

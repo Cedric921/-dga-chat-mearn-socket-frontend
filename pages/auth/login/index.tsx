@@ -9,6 +9,7 @@ import { login } from '../../../services/features/auth/authSlice';
 import { AppDispatch } from '../../../services/store';
 import { toast } from 'react-toastify';
 import logo from '../../../assets/images/logo.svg';
+import { VscLoading } from 'react-icons/vsc';
 
 const loginPage: NextPage = () => {
 	const [userInput, setUserInput] = useState({
@@ -17,7 +18,7 @@ const loginPage: NextPage = () => {
 	});
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
-	const { user, isSuccess, isError, errorMessage } = useSelector(
+	const { user, isSuccess, isLoading, isError, errorMessage } = useSelector(
 		(state: any) => state.auth
 	);
 
@@ -31,14 +32,14 @@ const loginPage: NextPage = () => {
 
 	useEffect(() => {
 		if (isError) toast.error(errorMessage);
-		if (user || isSuccess) {
-			toast.success(`Login as ${user.name} ${user.lastname}`);
+		if (user && isSuccess) {
+			toast.success(`Login as ${user && user.name} ${user && user.lastname}`);
 			router.push('/');
 		}
-	}, [isSuccess, isError]);
+	}, [isSuccess, isError, user]);
 	return (
 		<div className='h-screen w-screen bg-gray-900'>
-			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5'>
+			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5 '>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
 					<div className='w-full md:w-1/2 h-full bg-slate-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
 						<form action='' onSubmit={handleSubmit}>
@@ -50,7 +51,7 @@ const loginPage: NextPage = () => {
 									name='username'
 									id='username'
 									placeholder='cedric karungu'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
@@ -61,13 +62,19 @@ const loginPage: NextPage = () => {
 									name='password'
 									id='password'
 									placeholder='1234567890'
-									className='p-2 border-2 rounded-md'
+									className='p-2 border-2 rounded-md bg-slate-100'
 									onChange={handleChange}
 								/>
 							</div>
 							<div className='my-3 flex gap-2  justify-center md:justify-start '>
 								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
-									Connexion
+									{isLoading ? (
+										<p className='animate-spin text-center'>
+											<VscLoading />
+										</p>
+									) : (
+										<span>Connexion</span>
+									)}
 								</button>
 								<button
 									className='flex md:hidden border-blue-700 py-2 px-5 rounded-md text-blue-700 w-3/6 bg-slate-100 border-2'

@@ -19,7 +19,7 @@ const RoomAside = (props: any) => {
 		<aside className='relative w-20 bg-gray-900 p-2 text-white flex flex-col justify-between'>
 			<div>
 				<div className='profile w-full h-12 bg-slate-100 text-gray-800 text-4xl   font-bold rounded-xl flex items-center justify-center'>
-					{user.img ? <p></p> : <CiUser />}
+					{user && user.img ? <p></p> : <CiUser />}
 				</div>
 				<p className='text-center text-xs'>{user && user.name}</p>
 			</div>

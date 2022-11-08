@@ -18,15 +18,15 @@ const Messages = (props: any) => {
 	const { messages, users, isError, isSuccess, isLoading, messageError } =
 		useSelector((state: any) => state.messages);
 
-	useEffect(() => {
-		// dispatch(getUsers());
-	}, []);
+	// useEffect(() => {
+	// 	// dispatch(getUsers());
+	// }, []);
 
-	useEffect(() => {
-		const userIDS = { receiver: props.user._id, token: props.user.token };
-		console.log(props.user);
-		dispatch(getMessages(userIDS));
-	}, []);
+	// useEffect(() => {
+	// 	const userIDS = { receiver: props.user._id, token: props.user.token };
+	// 	console.log(props.user);
+	// 	dispatch(getMessages(userIDS));
+	// }, []);
 
 	return (
 		<>
@@ -41,7 +41,7 @@ const Messages = (props: any) => {
 				{/* Main messages */}
 				<div className='flex flex-col w-full h-full p-0'>
 					<div className='h-full top-2   bg-gray-900 rounded-xl p-0 ml-2 my-4 mr-4 flex flex-col'>
-						<div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-4 text-white'>
+						{/* <div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-4 text-white'>
 							<div className='rounded-full w-14 h-14 bg-slate-100'></div>
 							<div>
 								<h2 className='text-2xl'>
@@ -62,7 +62,7 @@ const Messages = (props: any) => {
 							) : (
 								<></>
 							)}
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</main>
