@@ -1,24 +1,18 @@
 import Link from 'next/link';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const AsideUsers = (props: any) => {
+	const { user: connectedUser } = useSelector((state: any) => state.auth);
 	return (
 		<div className='hidden md:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
-			{/* <form className='w-full'>
-				<input
-					type='text'
-					name='search'
-					className='w-full rounded-md p-2'
-					placeholder='Chercher un membre'
-				/>
-			</form> */}
 			<div className='users h-full min-w-max overflow-y-scroll'>
 				{props.users ? (
 					<div className='h-full overflow-y-scroll'>
 						{props.users.map((user: any) => (
 							<>
-								{user.email != props.user?.email ? (
+								{user.email != connectedUser?.email ? (
 									<div
 										key={user._id}
 										className=' my-2 mr-2 p-2 rounded text-white flex flex-row items-center hover:bg-blue-800 duration-700 hover:animate-pulse min-w-max'
@@ -40,7 +34,7 @@ const AsideUsers = (props: any) => {
 										</div>
 									</div>
 								) : (
-									<p></p>
+									<></>
 								)}
 							</>
 						))}

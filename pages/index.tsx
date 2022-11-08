@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../services/features/auth/authSlice';
-import { getUsers } from '../services/features/messages/messageSlice';
+import { getUsers } from '../services/features/users/usersSlice';
 import { useEffect } from 'react';
 import { AppDispatch } from '../services/store';
 import Link from 'next/link';
@@ -24,10 +24,15 @@ export default function Home() {
 	} = useSelector((state: any) => state.auth);
 	const {
 		messages,
-		users,
 		isError: isErrorMessages,
 		errorMessage: errorMessages,
 	} = useSelector((state: any) => state.messages);
+
+	const {
+		users,
+		isError: isErrorUsers,
+		errorMessage: errorUsers,
+	} = useSelector((state: any) => state.users);
 
 	useEffect(() => {
 		if (!user) router.push('/auth/login');
@@ -42,6 +47,7 @@ export default function Home() {
 	useEffect(() => {
 		if (isErrorMessages) toast.dark(errorMessages);
 		if (isErrorUser) toast.dark(errorUser);
+		if (isErrorUsers) toast.error(errorUsers);
 	}, [isErrorMessages, isErrorUser]);
 
 	return (

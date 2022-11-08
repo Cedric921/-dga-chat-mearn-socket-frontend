@@ -3,29 +3,41 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	getMessages,
-	getUsers,
-} from '../../services/features/messages/messageSlice';
+import { getMessages } from '../../services/features/messages/messageSlice';
+import { getUsers } from '../../services/features/users/usersSlice';
 import { AppDispatch } from '../../services/store';
 import RoomAside from '../../components/RoomAside';
 import AsideUsers from '../../components/AsideUsers';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const Messages = (props: any) => {
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
-	const { messages, users, isError, isSuccess, isLoading, messageError } =
-		useSelector((state: any) => state.messages);
+	const { messages, isError, isSuccess, isLoading, messageError } = useSelector(
+		(state: any) => state.messages
+	);
+	const { user } = useSelector((state: any) => state.auth);
+	const {
+		users,
+		isError: isErrorUsers,
+		isSuccess: isSuccessUsers,
+		isLoading: isLoadingUsers,
+		messageError: messageErrorUsers,
+	} = useSelector((state: any) => state.users);
+
+	useEffect(() => {
+		dispatch(getUsers());
+	}, [messages]);
+
+	useEffect(() => {
+		const userIDS = { receiver: props.user._id, token: props.user.token };
+		dispatch(getUsers());
+		dispatch(getMessages(userIDS));
+	}, [props.user]);
 
 	// useEffect(() => {
-	// 	// dispatch(getUsers());
-	// }, []);
-
-	// useEffect(() => {
-	// 	const userIDS = { receiver: props.user._id, token: props.user.token };
-	// 	console.log(props.user);
-	// 	dispatch(getMessages(userIDS));
+	// 	dispatch(getMessages());
 	// }, []);
 
 	return (
@@ -40,8 +52,8 @@ const Messages = (props: any) => {
 				<AsideUsers users={users} />
 				{/* Main messages */}
 				<div className='flex flex-col w-full h-full p-0'>
-					<div className='h-full top-2   bg-gray-900 rounded-xl p-0 ml-2 my-4 mr-4 flex flex-col'>
-						{/* <div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-4 text-white'>
+					<div className='h-full top-2   bg-gray-900 rounded-xl p-0 my-4 mx-4 flex flex-col'>
+						<div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-4 text-white'>
 							<div className='rounded-full w-14 h-14 bg-slate-100'></div>
 							<div>
 								<h2 className='text-2xl'>
@@ -54,7 +66,52 @@ const Messages = (props: any) => {
 							</div>
 						</div>
 						<div className='p-4 text-white h-full'>
-							{messages && messages.length > 0 ? <div>f</div> : <p></p>}
+							{messages && messages.messages.length > 0 ? (
+								<div>
+									{messages.messages.map((msg: any) => (
+										<div
+											className='flex flex-col h-full overflow-y-scroll'
+											key={msg._id}
+										>
+											{msg.sender === user?._id.toString() ? (
+												<div className='p-4 bg-blue-900 w-max rounded-lg m-2 self-start'>
+													<div className='flex items-center justify-between mb-2'>
+														<h6 className='text-xs text-slate-400'>
+															<span>{props.user && props.user.name}</span>{' '}
+															<span>{props.user && props.user.lastname}</span>
+														</h6>
+														<h6 className='text-xs  text-slate-400'>
+															{new Date(msg.updatedAt).toLocaleTimeString()}
+														</h6>
+													</div>
+													<p>{msg.content}</p>
+												</div>
+											) : (
+												<div className='p-2 bg-slate-700 w-max rounded-lg m-2 self-end'>
+													<div className='flex items-center justify-between'>
+														<h6 className='text-xs mb-2 text-slate-400'>
+															<span>{props.user && props.user.name}</span>{' '}
+															<span>{props.user && props.user.lastname}</span>
+														</h6>
+														<h6 className='text-xs mt-2 text-slate-400'>
+															{new Date(msg.updatedAt).toLocaleTimeString()}
+														</h6>
+													</div>
+													<p>{msg.content}</p>
+												</div>
+											)}
+										</div>
+									))}
+								</div>
+							) : (
+								<div className='h-full w-full flex flex-col items-center justify-center'>
+									<p>Vous n'avez pas encore commencé une conversation avec </p>
+									<h3 className='text-2xl text-blue-800'>
+										<span>{props.user && props.user.name}</span>{' '}
+										<span>{props.user && props.user.lastname}</span>
+									</h3>
+								</div>
+							)}
 							{isError ? (
 								<div className='w-full h-full flex items-center justify-center'>
 									<p>Une erreur est survenu lors du chargement des messages</p>
@@ -62,7 +119,7 @@ const Messages = (props: any) => {
 							) : (
 								<></>
 							)}
-						</div> */}
+						</div>
 					</div>
 				</div>
 			</main>
