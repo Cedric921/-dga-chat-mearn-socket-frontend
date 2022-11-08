@@ -11,6 +11,7 @@ import { AppDispatch } from '../services/store';
 import Link from 'next/link';
 import RoomAside from '../components/RoomAside';
 import AsideUsers from '../components/AsideUsers';
+import { MdMessage } from 'react-icons/md';
 
 export default function Home() {
 	const router = useRouter();
@@ -20,7 +21,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (!user) router.push('/auth/login');
-		if (user) dispatch(getUsers(user.token));
+		if (user) dispatch(getUsers());
 	}, [user, dispatch]);
 
 	const logoutUser = () => {
@@ -28,7 +29,7 @@ export default function Home() {
 		router.replace('/auth/login');
 	};
 
-	useEffect(() => {}, [user]);
+	// useEffect(() => {}, [user]);
 
 	return (
 		<div className={styles.container}>
@@ -44,7 +45,7 @@ export default function Home() {
 				<AsideUsers users={users} />
 
 				{/* Main messages */}
-				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 ml-0 mr-2 my-2 flex flex-col items-center justify-center'>
+				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 mx-2 my-2 flex flex-col items-center justify-center'>
 					<h2 className='text-3xl text-slate-100 font-extrabold m-2'>
 						Welcome <span className='text-blue-900'>{user && user?.name}</span>{' '}
 						<span className='text-blue-900'>{user && user?.lastname}</span>
@@ -52,6 +53,9 @@ export default function Home() {
 					<p className='text-slate-50'>
 						Select please one contact to start a chat{' '}
 					</p>
+					<h5 className='text-8xl text-white'>
+						<MdMessage />
+					</h5>
 				</div>
 			</main>
 		</div>

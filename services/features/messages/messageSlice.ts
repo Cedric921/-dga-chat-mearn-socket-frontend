@@ -14,9 +14,9 @@ const initialState = {
 //  get all users
 export const getUsers = createAsyncThunk(
 	'message/getUsers',
-	async (token: string, thunkAPI) => {
+	async (_, thunkAPI) => {
 		try {
-			return await messagesSerives.getUsers(token);
+			return await messagesSerives.getUsers();
 		} catch (error: any) {
 			const message =
 				(error.response &&
@@ -33,7 +33,7 @@ export const getUsers = createAsyncThunk(
 export const getMessages = createAsyncThunk(
 	'message/getMessages',
 	async (usersData: any, thunkAPI) => {
-		const token = usersData.token;
+		const token = JSON.parse(localStorage.getItem('chat-gda-user')!).token;
 		const ids = {
 			sender:
 				JSON.parse(localStorage.getItem('chat-gda-user')!)._id ||
@@ -41,10 +41,12 @@ export const getMessages = createAsyncThunk(
 			receiver: usersData.receiver,
 		};
 		try {
-			return await messagesSerives.getMessages(ids, token);
+			return await messagesSerives.getMessages(ids);
 		} catch (error: any) {
 			const message =
-				(error.response && error.response.data && error.reponse.data.message) ||
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
 				error.message ||
 				error.toString();
 			return thunkAPI.rejectWithValue(message);
@@ -75,6 +77,22 @@ const messageSlice = createSlice({
 				state.isLoading = false;
 				state.users = [];
 				state.isSuccess = false;
+				state.isError = true;
+				state.errorMessage = action.payload as string;
+			})
+			.addCase(getMessages.pending, (state) => {
+				state.isLoading = true;
+				state.isSuccess = false;
+				state.isError = false;
+			})
+			.addCase(getMessages.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.messages = action.payload;
+				state.isSuccess = true;
+			})
+			.addCase(getMessages.rejected, (state, action) => {
+				state.isLoading = false;
+				state.messages = null;
 				state.isError = true;
 				state.errorMessage = action.payload as string;
 			});

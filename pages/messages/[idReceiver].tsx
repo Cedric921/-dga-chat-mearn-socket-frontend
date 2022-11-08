@@ -3,10 +3,14 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages } from '../../services/features/messages/messageSlice';
+import {
+	getMessages,
+	getUsers,
+} from '../../services/features/messages/messageSlice';
 import { AppDispatch } from '../../services/store';
 import RoomAside from '../../components/RoomAside';
 import AsideUsers from '../../components/AsideUsers';
+import Link from 'next/link';
 
 const Messages = (props: any) => {
 	const router = useRouter();
@@ -15,9 +19,14 @@ const Messages = (props: any) => {
 		useSelector((state: any) => state.messages);
 
 	useEffect(() => {
-		const userIDS = { receiver: props.user._id };
+		// dispatch(getUsers());
+	}, []);
+
+	useEffect(() => {
+		const userIDS = { receiver: props.user._id, token: props.user.token };
+		console.log(props.user);
 		dispatch(getMessages(userIDS));
-	});
+	}, []);
 
 	return (
 		<>
@@ -30,16 +39,31 @@ const Messages = (props: any) => {
 				<RoomAside />
 				<AsideUsers users={users} />
 				{/* Main messages */}
-				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 ml-0 mr-2 my-2 flex flex-col items-center justify-center'>
-					<h2 className='text-3xl text-slate-100 font-extrabold m-2'></h2>
-					<p className='text-slate-50'>votre conversation avec </p>
-					<span className='text-3xl text-blue-600'>
-						{' '}
-						{props.user && props.user.name} {props.user && props.user.lastname}
-					</span>
-					<span className='text-xs text-white'>
-						@{props.user && props.user.username}
-					</span>
+				<div className='flex flex-col w-full h-full p-0'>
+					<div className='h-full top-2   bg-gray-900 rounded-xl p-0 ml-2 my-4 mr-4 flex flex-col'>
+						<div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-4 text-white'>
+							<div className='rounded-full w-14 h-14 bg-slate-100'></div>
+							<div>
+								<h2 className='text-2xl'>
+									{props.user && props.user.name}{' '}
+									{props.user && props.user.lastname}
+								</h2>
+								<h6 className='text-xs text-blue-500'>
+									@{props.user && props.user.username}
+								</h6>
+							</div>
+						</div>
+						<div className='p-4 text-white h-full'>
+							{messages && messages.length > 0 ? <div>f</div> : <p></p>}
+							{isError ? (
+								<div className='w-full h-full flex items-center justify-center'>
+									<p>Une erreur est survenu lors du chargement des messages</p>
+								</div>
+							) : (
+								<></>
+							)}
+						</div>
+					</div>
 				</div>
 			</main>
 		</>

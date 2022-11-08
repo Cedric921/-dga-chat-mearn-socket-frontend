@@ -1,12 +1,14 @@
 'use client';
 
 import { NextPage } from 'next';
+import Image from 'next/image';
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../services/features/auth/authSlice';
 import { AppDispatch } from '../../../services/store';
 import { toast } from 'react-toastify';
+import logo from '../../../assets/images/logo.svg';
 
 const loginPage: NextPage = () => {
 	const [userInput, setUserInput] = useState({
@@ -63,7 +65,7 @@ const loginPage: NextPage = () => {
 									onChange={handleChange}
 								/>
 							</div>
-							<div className='my-3 flex gap-2  justify-center '>
+							<div className='my-3 flex gap-2  justify-center md:justify-start '>
 								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
 									Connexion
 								</button>
@@ -77,6 +79,10 @@ const loginPage: NextPage = () => {
 						</form>
 					</div>
 					<div className='hidden md:flex flex-col w-full md:w-1/2 bg-blue-900  justify-center items-center rounded-r-lg p-20'>
+						<div className=' w-60 mb-4'>
+							<Image src={logo} />
+						</div>
+
 						<h2 className='text-4xl text-slate-50 font-bold'>Crypto chat</h2>
 						<p className='text-center text-white text-sm m-4'>
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit.

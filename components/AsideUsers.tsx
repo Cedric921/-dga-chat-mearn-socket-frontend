@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
+import { FaUserCircle } from 'react-icons/fa';
 
 const AsideUsers = (props: any) => {
 	return (
-		<div className=' top-2 bottom-2 left-20 w-80 bg-slate-700 rounded-xl p-2 pt-4 mx-4 my-2 flex flex-col '>
+		<div className='hidden md:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
 			<form className='w-full'>
 				<input
 					type='text'
@@ -21,7 +22,9 @@ const AsideUsers = (props: any) => {
 								className=' my-2 p-2 rounded text-white flex flex-row items-center hover:bg-blue-800 duration-700 hover:animate-pulse border-b-indigo-800 min-w-max'
 							>
 								<Link href={`/messages/${user._id}`}>
-									<div className='profile-img w-10 h-10 bg-slate-50 mr-2 rounded-full cursor-pointer'></div>
+									<div className='profile-img w-10 h-10 bg-slate-50 mr-2 rounded-full cursor-pointer  text-gray-800 text-5xl flex items-center justify-center font-bold p-0'>
+										{user.img ? <p></p> : <FaUserCircle />}
+									</div>
 								</Link>
 								<div>
 									<Link href={`/messages/${user._id}`}>
