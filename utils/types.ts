@@ -22,3 +22,27 @@ export interface iUsersIDMessage {
 	sender?: string;
 	receiver: string;
 }
+
+export interface iThunkAPIUser {
+	auth: {
+		user: {
+			mail: string;
+			lastname: string;
+			name: string;
+			token: string;
+			username: string;
+			_id: string;
+		};
+		errorMessage: string;
+		isError: boolean;
+		isLoading: boolean;
+		isSuccess: boolean;
+	};
+	messages: {
+		messages: [];
+		errorMessage: string;
+		isError: boolean;
+		isLoading: boolean;
+		isSuccess: boolean;
+	};
+}

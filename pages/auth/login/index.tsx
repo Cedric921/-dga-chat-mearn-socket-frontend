@@ -36,7 +36,7 @@ const loginPage: NextPage = () => {
 			toast.success(`Login as ${user && user.name} ${user && user.lastname}`);
 			router.push('/');
 		}
-	}, [isSuccess, isError, user]);
+	}, [isSuccess, isError, user, dispatch]);
 	return (
 		<div className='h-screen w-screen bg-gray-900'>
 			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5 '>
@@ -69,8 +69,8 @@ const loginPage: NextPage = () => {
 							<div className='my-3 flex gap-2  justify-center md:justify-start '>
 								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
 									{isLoading ? (
-										<p className='animate-spin text-center'>
-											<VscLoading />
+										<p className=' text-center'>
+											<VscLoading className='animate-spin' />
 										</p>
 									) : (
 										<span>Connexion</span>
