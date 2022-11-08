@@ -10,6 +10,7 @@ import RoomAside from '../../components/RoomAside';
 import AsideUsers from '../../components/AsideUsers';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { MdSend } from 'react-icons/md';
 
 const Messages = (props: any) => {
 	const router = useRouter();
@@ -65,6 +66,8 @@ const Messages = (props: any) => {
 								</h6>
 							</div>
 						</div>
+
+						{/* display messages */}
 						<div className='p-4 text-white h-full'>
 							{messages && messages.messages.length > 0 ? (
 								<div>
@@ -119,6 +122,21 @@ const Messages = (props: any) => {
 							) : (
 								<></>
 							)}
+						</div>
+
+						{/* send message input */}
+						<div className='bg-slate-600 text-slate-100 rounded-b-xl px-4 py-2 min-h-max h-max'>
+							<form className='flex justify-between items-center min-h-max h-max'>
+								<span>icon</span>
+								<textarea
+									name=''
+									id=''
+									className='w-full rounded-md bg-slate-400 mx-2 min-h-max h-max'
+								></textarea>
+								<button className='w-16 h-14 mx-2 bg-slate-900 text-slate-200 flex justify-center items-center text-2xl rounded-full animate-pulse hover:shadow-xl'>
+									<MdSend />
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
