@@ -16,8 +16,7 @@ const ChatForm = (props: any) => {
 	const handleChange = (e: any) => {
 		setMessageInput(e.target.value);
 	};
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSend = () => {
 		const data = {
 			sender: user._id,
 			receiver: props.receiver._id,
@@ -26,8 +25,12 @@ const ChatForm = (props: any) => {
 		dispatch(addMessage(data));
 		dispatch(getMessages({ receiver: props.receiver._id }));
 	};
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		handleSend();
+	};
 	return (
-		<div className='bg-slate-600 text-slate-100 rounded-b-xl px-2 py-2 min-h-max h-max'>
+		<div className='absolute bottom-0 left-0 right-0 bg-slate-600 text-slate-100 rounded-b-xl px-2 py-2 min-h-max'>
 			<form
 				onSubmit={handleSubmit}
 				className='flex justify-between items-center min-h-max h-max'
@@ -40,6 +43,9 @@ const ChatForm = (props: any) => {
 						className='w-full h-full rounded-l-xl focus:border-0 bg-slate-400 m-0 text-slate-900 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
+						onKeyUp={(e) => {
+							if ((e.key = 'Enter')) handleSend();
+						}}
 					></textarea>
 					<button
 						type='submit'

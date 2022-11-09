@@ -6,16 +6,13 @@ const ChatItems = (props: any) => {
 	const { user } = useSelector((state: any) => state.auth);
 
 	return (
-		<div className='p-4 text-white h-full'>
+		<div className='p-4 text-white overflow-y-scroll'>
 			{props.messages && props.messages.length > 0 ? (
 				<div>
 					{props.messages.map((msg: any) => (
-						<div
-							className='flex flex-col h-full overflow-y-scroll'
-							key={msg._id}
-						>
+						<div className='flex flex-col h-full ' key={msg._id}>
 							{msg.sender === user?._id.toString() ? (
-								<div className='p-4 bg-blue-900 w-max rounded-lg m-2 self-end'>
+								<div className='p-4 bg-blue-900 w-max   max-w-full rounded-lg m-2 self-end'>
 									<div className='flex items-center justify-between mb-2'>
 										<h6 className='text-xs text-slate-400'>
 											<span>{user && user.name}</span>{' '}
@@ -28,7 +25,7 @@ const ChatItems = (props: any) => {
 									<p>{msg.content}</p>
 								</div>
 							) : (
-								<div className='p-2 bg-slate-700 w-max rounded-lg m-2 self-start'>
+								<div className='p-2 bg-slate-700 w-max max-w-full rounded-lg m-2 self-start'>
 									<div className='flex items-center justify-between mb-2'>
 										<h6 className='text-xs  text-slate-400'>
 											<span>{props.receiver && props.receiver.name}</span>{' '}
@@ -45,7 +42,7 @@ const ChatItems = (props: any) => {
 					))}
 				</div>
 			) : (
-				<div className='h-full w-full flex flex-col items-center justify-center'>
+				<div className='absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center'>
 					<h3 className='text-3xl font-extrabold text-blue-800'>
 						<span>{props.receiver && props.receiver.name}</span>{' '}
 						<span>{props.receiver && props.receiver.lastname}</span>
