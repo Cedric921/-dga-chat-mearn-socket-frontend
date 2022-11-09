@@ -11,7 +11,7 @@ const AsideUsers = (props: any) => {
 				{props.users ? (
 					<div className='h-full overflow-y-scroll'>
 						{props.users.map((user: any) => (
-							<>
+							<div key={user._id}>
 								{user.email != connectedUser?.email ? (
 									<div
 										key={user._id}
@@ -22,21 +22,21 @@ const AsideUsers = (props: any) => {
 												{user.img ? <p></p> : <FaUserCircle />}
 											</div>
 										</Link>
-										<div>
-											<Link href={`/messages/${user._id}`}>
+										<Link href={`/messages/${user._id}`}>
+											<div>
 												<h3 className='text-md cursor-pointer'>
 													<span>{user.name}</span> <span>{user.lastname}</span>
 												</h3>
-											</Link>
-											<h5 className='text-xs text-blue-400'>
-												@{user.username}
-											</h5>
-										</div>
+												<h5 className='text-xs text-blue-400'>
+													@{user.username}
+												</h5>
+											</div>
+										</Link>
 									</div>
 								) : (
 									<></>
 								)}
-							</>
+							</div>
 						))}
 					</div>
 				) : (

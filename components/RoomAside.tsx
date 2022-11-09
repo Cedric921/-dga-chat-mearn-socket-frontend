@@ -24,7 +24,7 @@ const RoomAside = (props: any) => {
 				<p className='text-center text-xs'>{user && user.name}</p>
 			</div>
 			<button
-				className=' bottom-2 left-2 w-12 h-12 bg-red-300 hover:bg-blue-800 hover:text-white duration-700 animate-bounce rounded-xl text-blue-900 flex items-center justify-center'
+				className=' bottom-2 left-2 w-12 h-12 bg-slate-300 hover:bg-red-700 hover:text-white text-red-700 duration-700 animate-pulse rounded-xl text-red	-900 flex items-center justify-center'
 				onClick={logoutUser}
 			>
 				<MdLogout />

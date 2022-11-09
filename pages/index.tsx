@@ -75,7 +75,7 @@ export default function Home() {
 							<p className='text-slate-50'>
 								Select please one contact to start a chat{' '}
 							</p>
-							<h5 className='text-8xl text-white animate-bounce mt-5'>
+							<h5 className='text-8xl text-white animate-pulse mt-5'>
 								<MdMessage />
 							</h5>
 						</>

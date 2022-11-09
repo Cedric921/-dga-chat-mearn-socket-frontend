@@ -67,11 +67,9 @@ const loginPage: NextPage = () => {
 								/>
 							</div>
 							<div className='my-3 flex gap-2  justify-center md:justify-start '>
-								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
+								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6 flex justify-center'>
 									{isLoading ? (
-										<p className=' text-center'>
-											<VscLoading className='animate-spin' />
-										</p>
+										<VscLoading className='animate-spin text-center' />
 									) : (
 										<span>Connexion</span>
 									)}
