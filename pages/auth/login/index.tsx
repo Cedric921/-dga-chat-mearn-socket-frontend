@@ -41,7 +41,7 @@ const loginPage: NextPage = () => {
 		<div className='h-screen w-screen bg-gray-900'>
 			<div className='relative container  mx-auto h-screen flex items-center justify-center  py-20 px-5 '>
 				<div className=' w-full h-full flex  flex-col-reverse md:flex-row  rounded-md box-border shadow-md'>
-					<div className='w-full md:w-1/2 h-full bg-slate-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
+					<div className='w-full md:w-1/2 h-full  bg-slate-100 flex flex-col justify-center p-8 sm:px-10 lg:px-20  rounded-lg md:rounded-none md:rounded-l-lg box-border text-gray-600'>
 						<form action='' onSubmit={handleSubmit}>
 							<h2 className='text-3xl font-bold text-blue-800'>Se connecter</h2>
 							<div className='my-3 flex flex-col justify-center'>
@@ -67,11 +67,9 @@ const loginPage: NextPage = () => {
 								/>
 							</div>
 							<div className='my-3 flex gap-2  justify-center md:justify-start '>
-								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6'>
+								<button className='bg-blue-700 py-2 px-5 rounded-md text-slate-50 w-3/6 flex justify-center'>
 									{isLoading ? (
-										<p className=' text-center'>
-											<VscLoading className='animate-spin' />
-										</p>
+										<VscLoading className='animate-spin text-center' />
 									) : (
 										<span>Connexion</span>
 									)}

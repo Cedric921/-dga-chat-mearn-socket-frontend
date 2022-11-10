@@ -3,15 +3,20 @@ import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
-const AsideUsers = (props: any) => {
+const AsideUsers = () => {
 	const { user: connectedUser } = useSelector((state: any) => state.auth);
+	const {
+		users,
+		isError: isErrorUsers,
+		errorMessage: errorUsers,
+	} = useSelector((state: any) => state.users);
 	return (
 		<div className='hidden md:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
 			<div className='users h-full min-w-max overflow-y-scroll'>
-				{props.users ? (
+				{users ? (
 					<div className='h-full overflow-y-scroll'>
-						{props.users.map((user: any) => (
-							<>
+						{users.map((user: any) => (
+							<div key={user._id}>
 								{user.email != connectedUser?.email ? (
 									<div
 										key={user._id}
@@ -22,21 +27,21 @@ const AsideUsers = (props: any) => {
 												{user.img ? <p></p> : <FaUserCircle />}
 											</div>
 										</Link>
-										<div>
-											<Link href={`/messages/${user._id}`}>
+										<Link href={`/messages/${user._id}`}>
+											<div>
 												<h3 className='text-md cursor-pointer'>
 													<span>{user.name}</span> <span>{user.lastname}</span>
 												</h3>
-											</Link>
-											<h5 className='text-xs text-blue-400'>
-												@{user.username}
-											</h5>
-										</div>
+												<h5 className='text-xs text-blue-400'>
+													@{user.username}
+												</h5>
+											</div>
+										</Link>
 									</div>
 								) : (
 									<></>
 								)}
-							</>
+							</div>
 						))}
 					</div>
 				) : (
