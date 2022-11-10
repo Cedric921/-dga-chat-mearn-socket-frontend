@@ -44,10 +44,10 @@ const Messages = (props: any) => {
 			</Head>
 			<main className='fixed top-0 bottom-0 left-0 right-0 bg-blue-900 flex flex-column '>
 				<RoomAside />
-				<AsideUsers users={users} />
+				<AsideUsers />
 				{/* Main messages */}
-				<div className='flex flex-col w-full h-full p-0'>
-					<div className='h-full top-2   bg-gray-900 rounded-xl p-0 my-4 mx-4 flex flex-col'>
+				<div className='flex flex-col w-full m-0 p-0 relative'>
+					<div className='absolute top-0 bottom-0 left-0 right-0   bg-gray-900 rounded-xl p-0 my-2 mx-2 flex flex-col'>
 						{/* header */}
 						<ChatHeader user={props.user} />
 

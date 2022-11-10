@@ -4,7 +4,7 @@ import { VscChevronLeft } from 'react-icons/vsc';
 
 const ChatHeader = (props: any) => {
 	return (
-		<div className='w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-2 text-white'>
+		<div className=' w-full bg-slate-600 rounded-t-xl p-2 flex items-center gap-2 text-white'>
 			<div className='rounded-full hover:bg-slate-700 transition-all duration-700 w-12 h-12 flex justify-center items-center cursor-pointer  text-2xl'>
 				<Link href='/'>
 					<VscChevronLeft />
