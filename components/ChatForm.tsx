@@ -24,11 +24,12 @@ const ChatForm = (props: any) => {
 	const handleSend = () => {
 		const data = {
 			sender: user._id,
-			receiver: props.receiver._id,
+			receiverID: props.receiver._id,
 			content: messageInput,
 		};
+		const receiver: string = props.receiver._id;
 		dispatch(addMessage(data));
-		dispatch(getMessages({ receiver: props.receiver._id }));
+		dispatch(getMessages(receiver));
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
