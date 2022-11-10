@@ -8,7 +8,7 @@ const ChatItems = (props: any) => {
 	return (
 		<div className='p-4 text-white overflow-y-scroll'>
 			{props.messages && props.messages.length > 0 ? (
-				<div>
+				<div className='pb-16'>
 					{props.messages.map((msg: any) => (
 						<div className='flex flex-col h-full ' key={msg._id}>
 							{msg.sender === user?._id.toString() ? (
@@ -18,6 +18,7 @@ const ChatItems = (props: any) => {
 											<span>{user && user.name}</span>{' '}
 											<span>{user && user.lastname}</span>
 										</h6>
+										{'   '}
 										<h6 className='text-xs  text-slate-400'>
 											{new Date(msg.updatedAt).toLocaleTimeString()}
 										</h6>
@@ -31,6 +32,7 @@ const ChatItems = (props: any) => {
 											<span>{props.receiver && props.receiver.name}</span>{' '}
 											<span>{props.receiver && props.receiver.lastname}</span>
 										</h6>
+										{'   '}
 										<h6 className='text-xs text-slate-400'>
 											{new Date(msg.updatedAt).toLocaleTimeString()}
 										</h6>

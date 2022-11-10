@@ -1,4 +1,9 @@
-import React, { FormEvent, useState } from 'react';
+import React, {
+	FormEvent,
+	KeyboardEvent,
+	KeyboardEventHandler,
+	useState,
+} from 'react';
 import { BiImageAdd } from 'react-icons/bi';
 import { MdSend } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,8 +48,8 @@ const ChatForm = (props: any) => {
 						className='w-full h-full rounded-l-xl focus:border-0 bg-slate-400 m-0 text-slate-900 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
-						onKeyUp={(e) => {
-							if ((e.key = 'Enter')) handleSend();
+						onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
+							if (e.code === 'Enter') handleSend();
 						}}
 					></textarea>
 					<button

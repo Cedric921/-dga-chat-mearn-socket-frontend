@@ -58,10 +58,10 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main className='fixed top-0 bottom-0 left-0 right-0 bg-blue-900 flex flex-column '>
-				<RoomAside user={user} logoutUser={logoutUser} />
+				<RoomAside />
 
 				{/* aside for users */}
-				<AsideUsers users={users} user={user} />
+				<AsideUsers />
 
 				{/* Main messages */}
 				<div className=' top-2 bottom-2 left-20 w-full bg-gray-900 rounded-xl p-4 mx-2 my-2 flex flex-col items-center justify-center text-center'>
