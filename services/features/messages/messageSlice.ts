@@ -23,15 +23,11 @@ const initialState: iMessageState = {
 // get messages from user connected
 export const getMessages = createAsyncThunk(
 	'message/getMessages',
-	async (usersData: any, thunkAPI) => {
+	async (receiverId: string, thunkAPI) => {
 		const { auth } = thunkAPI.getState() as iThunkAPIUser;
 		const { token } = auth.user;
-		const ids = {
-			sender: auth.user._id || usersData.sender,
-			receiver: usersData.receiver,
-		};
 		try {
-			return await messagesSerives.getMessages(ids, token);
+			return await messagesSerives.getMessages(receiverId, token);
 		} catch (error: any) {
 			const message =
 				(error.response &&
@@ -50,13 +46,9 @@ export const addMessage = createAsyncThunk(
 	async (usersData: any, thunkAPI) => {
 		const { auth } = thunkAPI.getState() as iThunkAPIUser;
 		const { token } = auth.user;
-		const data = {
-			sender: auth.user._id || usersData.sender,
-			receiver: usersData.receiver,
-			content: usersData.content,
-		};
+		const { content, receiverID } = usersData;
 		try {
-			return await messagesSerives.addMessage(data, token);
+			return await messagesSerives.addMessage(content, receiverID, token);
 		} catch (error: any) {
 			const message =
 				(error.response &&

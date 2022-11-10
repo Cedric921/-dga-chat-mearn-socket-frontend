@@ -24,7 +24,21 @@ const AsideUsers = () => {
 									>
 										<Link href={`/messages/${user._id}`}>
 											<div className='profile-img w-10 h-10 bg-slate-50 mr-2 rounded-full cursor-pointer  text-gray-800 text-5xl flex items-center justify-center font-bold p-0'>
-												{user.img ? <p></p> : <FaUserCircle />}
+												{user && user.imageUrl != undefined ? (
+													<div className='h-full w-full'>
+														<img
+															src={
+																process.env.NEXT_PUBLIC_BACKEND_URI +
+																user.imageUrl
+															}
+															width={'100%'}
+															height='100%'
+															className='w-full h-full rounded-full'
+														/>
+													</div>
+												) : (
+													<FaUserCircle />
+												)}
 											</div>
 										</Link>
 										<Link href={`/messages/${user._id}`}>

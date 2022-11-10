@@ -4,22 +4,25 @@ import { iUsersIDMessage } from '../../../utils/types';
 // api
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URI;
 
-const getMessages = async (usersIds: iUsersIDMessage, token: string) => {
+const getMessages = async (receiverId: string, token: string) => {
 	token = token || JSON.parse(localStorage.getItem('chat-gda-user')!).token;
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	const res = await axios.post(
-		`${API_URL}/api/v1/messages/getMessages`,
-		usersIds,
+	const res = await axios.get(
+		`${API_URL}/api/v1/messages/${receiverId}`,
 		config
 	);
 	return res.data;
 };
 
-const addMessage = async (usersIds: iUsersIDMessage, token: string) => {
+const addMessage = async (
+	content: string,
+	receiverId: string,
+	token: string
+) => {
 	token = token || JSON.parse(localStorage.getItem('chat-gda-user')!).token;
 
 	const config = {
@@ -28,8 +31,8 @@ const addMessage = async (usersIds: iUsersIDMessage, token: string) => {
 		},
 	};
 	const res = await axios.post(
-		`${API_URL}/api/v1/messages/addMessages`,
-		usersIds,
+		`${API_URL}/api/v1/messages/${receiverId}`,
+		content,
 		config
 	);
 	console.log(res.data);

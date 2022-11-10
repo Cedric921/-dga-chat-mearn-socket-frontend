@@ -21,7 +21,18 @@ const RoomAside = () => {
 			<div>
 				<Link href='/auth/profil'>
 					<div className='profile w-full h-12 bg-slate-100 text-gray-800 text-4xl   font-bold rounded-xl flex items-center justify-center'>
-						{user && user.img ? <p></p> : <CiUser />}
+						{user && user.imageUrl ? (
+							<div className='h-full w-full'>
+								<img
+									src={user.imageUrl}
+									width={'100%'}
+									height='100%'
+									className='w-full h-full rounded-full'
+								/>
+							</div>
+						) : (
+							<CiUser />
+						)}
 					</div>
 				</Link>
 				<p className='text-center text-xs'>{user && user.name}</p>

@@ -27,8 +27,9 @@ const ChatForm = (props: any) => {
 			receiver: props.receiver._id,
 			content: messageInput,
 		};
+		const receiver: string = props.receiver._id;
 		dispatch(addMessage(data));
-		dispatch(getMessages({ receiver: props.receiver._id }));
+		dispatch(getMessages(receiver));
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
