@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import AsideUsers from '../../../components/AsideUsers';
 import RoomAside from '../../../components/RoomAside';
 import { getUsers } from '../../../services/features/users/usersSlice';
-import { logout } from '../../../services/features/auth/authSlice';
+import { logout, updateImage } from '../../../services/features/auth/authSlice';
 import { AppDispatch } from '../../../services/store';
 import styles from '../../../styles/Home.module.css';
 import { CiUser } from 'react-icons/ci';
+import Image from 'next/image';
 
 const profil = () => {
 	const dispatch = useDispatch<AppDispatch>();
+	const [image, setImage] = useState<string | Blob>('');
 	const [profileInput, setProfileInput] = useState({
 		name: '',
 		lastname: '',
@@ -33,7 +35,11 @@ const profil = () => {
 		e.preventDefault();
 	};
 
-	const changeImgProfile = () => {
+	const changeImgProfile = (e: FormEvent) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append('image', image);
+		dispatch(updateImage(formData));
 		//
 	};
 
@@ -57,69 +63,87 @@ const profil = () => {
 							<div className='flex-1 image_profile flex flex-col gap-4 items-center justify-center'>
 								{/* profile img */}
 								<div className='bg-slate-700 h-40 w-40 sm:h-72 sm:w-72 rounded-full flex items-center justify-center text-9xl text-slate-100'>
-									<CiUser />
+									{user && user.imageUrl ? (
+										<div className='h-full w-full'>
+											<img
+												src={user.imageUrl}
+												width={'100%'}
+												height='100%'
+												className='w-full h-full rounded-full'
+											/>
+										</div>
+									) : (
+										<CiUser />
+									)}
 								</div>
 								<form onSubmit={changeImgProfile} className='w-full '>
 									<input
 										type='file'
-										name='profile_img'
+										name='image'
 										id=''
 										className='w-1/2 text-slate-100 p-2 mx-auto'
+										onChange={(e) => setImage(e.target.value)}
 									/>
+									<button
+										type='submit'
+										className='w-full md:w-40  p-2 bg-blue-900 hover:animate-pulse m-2 mt-4 px-8 text-slate-100 rounded-sm '
+									>
+										Update
+									</button>
 								</form>
 							</div>
 							<div className='data flex-2'>
 								<form onSubmit={handleSubmit}>
-									<h3 className='text-blue-800 mx-2 my-4 text-xl border-b-2'>
+									<h3 className='text-blue-800 mx-2 my-4 text-xl border-b-2 border-gray-600'>
 										Informations personnelles
 									</h3>
 									<div className='flex flex-wrap pb-4'>
-										<div className='w-full sm:w-1/2 p-2	text-white'>
+										<div className='w-full sm:w-1/2 p-2	text-slate-300'>
 											<label htmlFor='name'>Prenom</label>
 											<input
 												type='text'
 												id='name'
 												name='name'
 												value={user ? user.name : ''}
-												className='w-full p-2 rounded-sm text-slate-800'
+												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
 										</div>
-										<div className='w-full sm:w-1/2 p-2	text-white'>
+										<div className='w-full sm:w-1/2 p-2	text-slate-300'>
 											<label htmlFor='lastname'>Nom</label>
 											<input
 												type='text'
 												id='lastname'
 												name='lastname'
 												value={user ? user.lastname : ''}
-												className='w-full p-2 rounded-sm text-slate-800'
+												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
 										</div>
 									</div>
-									<h3 className='text-blue-800 mx-2 my-4 text-xl border-b-2'>
+									<h3 className='text-blue-800 mx-2 my-4 text-xl border-b-2 border-gray-600'>
 										Informations d'authentification
 									</h3>
 									<div className='flex flex-wrap mb-4'>
-										<div className='w-full sm:w-1/2 p-2	text-white'>
+										<div className='w-full sm:w-1/2 p-2	text-slate-300'>
 											<label htmlFor='email'>Email</label>
 											<input
 												type='email'
 												id='email'
 												name='email'
 												value={user ? user.email : ''}
-												className='w-full p-2 rounded-sm text-slate-800'
+												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
 										</div>
-										<div className='w-full sm:w-1/2 p-2	text-white'>
+										<div className='w-full sm:w-1/2 p-2	text-slate-300'>
 											<label htmlFor='lastname'>Nom d'utilisateur</label>
 											<input
 												type='text'
 												id='username'
 												name='username'
 												value={user ? user.username : ''}
-												className='w-full p-2 rounded-sm text-slate-800'
+												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600 '
 												onChange={handleChange}
 											/>
 										</div>

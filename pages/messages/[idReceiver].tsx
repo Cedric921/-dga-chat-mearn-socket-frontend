@@ -18,22 +18,15 @@ const Messages = (props: any) => {
 	const { messages, isError, isSuccess, isLoading, messageError } = useSelector(
 		(state: any) => state.messages
 	);
-	const { users } = useSelector((state: any) => state.users);
-	const { user } = useSelector((state: any) => state.auth);
 
 	useEffect(() => {
 		dispatch(getUsers());
 	}, [messages]);
 
 	useEffect(() => {
-		const userIDS = { receiver: props.user._id, token: user.token };
 		dispatch(getUsers());
-		dispatch(getMessages(userIDS));
+		dispatch(getMessages(props.user._id));
 	}, [props.user]);
-
-	// useEffect(() => {
-	// 	dispatch(getMessages());
-	// }, []);
 
 	return (
 		<>
