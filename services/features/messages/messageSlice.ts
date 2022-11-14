@@ -46,7 +46,8 @@ export const addMessage = createAsyncThunk(
 	async (usersData: any, thunkAPI) => {
 		const { auth } = thunkAPI.getState() as iThunkAPIUser;
 		const { token } = auth.user;
-		const { content, receiverID } = usersData;
+		const { formData: content, receiverID } = usersData;
+		console.log(usersData);
 		try {
 			return await messagesSerives.addMessage(content, receiverID, token);
 		} catch (error: any) {
