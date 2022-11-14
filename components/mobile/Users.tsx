@@ -1,19 +1,21 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { MdLogout } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../services/features/auth/authSlice';
+import { AppDispatch } from '../../services/store';
+import Header from './Header';
 
 const AsideUsers = () => {
 	const { user: connectedUser } = useSelector((state: any) => state.auth);
-	const {
-		users,
-		isError: isErrorUsers,
-		errorMessage: errorUsers,
-	} = useSelector((state: any) => state.users);
+	const { users } = useSelector((state: any) => state.users);
 	return (
-		<div className='hidden sm:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
-			<div className='users h-full min-w-max'>
-				<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>Contacts</h2>
+		<div className='flex sm:hidden top-2 bottom-2  w-full bg-gray-900 rounded-none p-0 m-0  flex-col '>
+			<Header />
+			{/* main users */}
+			<div className='users h-full min-w-max overflow-y-scroll'>
 				{users ? (
 					<div className='h-full overflow-y-scroll'>
 						{users.map((user: any) => (
@@ -24,7 +26,7 @@ const AsideUsers = () => {
 										className=' my-2 mr-2 p-2 rounded text-white flex flex-row items-center hover:bg-blue-800 duration-700 hover:animate-pulse min-w-max'
 									>
 										<Link href={`/messages/${user._id}`}>
-											<div className='profile-img w-10 h-10 border-slate-50 mr-2 rounded-full cursor-pointer  text-gray-800 text-5xl flex items-center justify-center font-bold p-0'>
+											<div className='profile-img w-20 h-20 border-slate-50 mr-2 rounded-full cursor-pointer  text-slate-600  text-5xl flex items-center justify-center font-bold p-0'>
 												{user && user.imageUrl != undefined ? (
 													<div className='h-full w-full'>
 														<img
@@ -38,16 +40,18 @@ const AsideUsers = () => {
 														/>
 													</div>
 												) : (
-													<FaUserCircle />
+													<div>
+														<FaUserCircle className='w-20 h-20  ' />
+													</div>
 												)}
 											</div>
 										</Link>
 										<Link href={`/messages/${user._id}`}>
 											<div>
-												<h3 className='text-md cursor-pointer'>
+												<h3 className='text-2xl cursor-pointer'>
 													<span>{user.name}</span> <span>{user.lastname}</span>
 												</h3>
-												<h5 className='text-xs text-slate-400'>
+												<h5 className='text-xl text-slate-400'>
 													@{user.username}
 												</h5>
 											</div>

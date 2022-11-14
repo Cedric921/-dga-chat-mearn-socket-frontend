@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { MdLogout } from 'react-icons/md';
 import { CiUser } from 'react-icons/ci';
 import Link from 'next/link';
+import AsideUsers from './mobile/Users';
 
 const RoomAside = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +18,7 @@ const RoomAside = () => {
 		router.replace('/auth/login');
 	};
 	return (
-		<aside className='relative w-20 bg-gray-900 p-2 text-white flex flex-col justify-between'>
+		<aside className='hidden relative w-20 bg-gray-900 p-2 text-white md:flex flex-col justify-between'>
 			<div>
 				<Link href='/auth/profil'>
 					<div className='profile w-full h-12 bg-slate-100 text-gray-800 text-4xl   font-bold rounded-xl flex items-center justify-center'>

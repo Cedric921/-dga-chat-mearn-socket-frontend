@@ -11,6 +11,7 @@ import AsideUsers from '../../components/AsideUsers';
 import ChatForm from '../../components/ChatForm';
 import ChatItems from '../../components/ChatItems';
 import ChatHeader from '../../components/ChatHeader';
+import { io } from 'socket.io-client';
 
 const Messages = (props: any) => {
 	const router = useRouter();
@@ -28,6 +29,19 @@ const Messages = (props: any) => {
 		dispatch(getMessages(props.user._id));
 	}, [props.user]);
 
+	useEffect(() => {
+		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
+		socket.on('connect', () => {
+			console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+		});
+		socket.on('messages', (data) => {
+			console.log(data);
+			if (data.action == 'create') {
+				dispatch(getMessages(props.user._id));
+			}
+		});
+	});
+
 	return (
 		<>
 			<Head>
@@ -40,7 +54,7 @@ const Messages = (props: any) => {
 				<AsideUsers />
 				{/* Main messages */}
 				<div className='flex flex-col w-full m-0 p-0 relative'>
-					<div className='absolute top-0 bottom-0 left-0 right-0   bg-gray-900 rounded-xl p-0 my-2 mx-2 flex flex-col'>
+					<div className='absolute top-0 bottom-0 left-0 right-0   bg-gray-900 rounded-xl p-0 m-0 sm:m-2 flex flex-col'>
 						{/* header */}
 						<ChatHeader user={props.user} />
 
