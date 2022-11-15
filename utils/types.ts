@@ -18,6 +18,14 @@ export interface iUserSignupInput {
 	username: string;
 }
 
+export interface iUserInput {
+	name: string;
+	lastname: string;
+	email: string;
+	password?: string;
+	username: string;
+}
+
 export interface iUsersIDMessage {
 	sender?: string;
 	receiver: string;

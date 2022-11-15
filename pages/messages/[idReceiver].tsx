@@ -31,16 +31,14 @@ const Messages = (props: any) => {
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
-		socket.on('connect', () => {
-			console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-		});
+
 		socket.on('messages', (data) => {
 			console.log(data);
 			if (data.action == 'create') {
 				dispatch(getMessages(props.user._id));
 			}
 		});
-	});
+	}, [messages]);
 
 	return (
 		<>
@@ -102,4 +100,4 @@ export const getStaticPaths = async () => {
 	};
 };
 
-export default Messages;
+export default React.memo(Messages);

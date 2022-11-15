@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 import {
 	iThunkAPIUser,
+	iUserInput,
 	iUserLoginInput,
 	iUserSignupInput,
 } from '../../../utils/types';
@@ -87,6 +88,25 @@ export const updateImage = createAsyncThunk(
 	}
 );
 
+export const updateUser = createAsyncThunk(
+	'auth/update',
+	async (userData: iUserInput, thunkAPI) => {
+		try {
+			const { auth } = thunkAPI.getState() as iThunkAPIUser;
+			const { token } = auth.user;
+			return authService.updateUser(userData, token);
+		} catch (error: any) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	}
+);
+
 const authSlice = createSlice({
 	name: 'auth',
 	initialState,
@@ -148,6 +168,28 @@ const authSlice = createSlice({
 				state.isError = false;
 			})
 			.addCase(updateImage.fulfilled, (state, action) => {
+				console.log(action);
+				state.isLoading = false;
+				state.isSuccess = true;
+				state.isError = false;
+				state.user = action.payload;
+				state.user.imageUrl = action.payload.imageUrl
+					? process.env.NEXT_PUBLIC_BACKEND_URI + action.payload.imageUrl
+					: null;
+				localStorage.setItem('chat-gda-user', JSON.stringify(state.user));
+			})
+			.addCase(updateImage.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isSuccess = false;
+				state.isError = true;
+				state.errorMessage = action.payload as string;
+			})
+			.addCase(updateUser.pending, (state) => {
+				state.isLoading = true;
+				state.isSuccess = false;
+				state.isError = false;
+			})
+			.addCase(updateUser.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
 				state.isError = false;
@@ -156,9 +198,10 @@ const authSlice = createSlice({
 					? process.env.NEXT_PUBLIC_BACKEND_URI + state.user.imageUrl
 					: null;
 			})
-			.addCase(updateImage.rejected, (state, action) => {
+			.addCase(updateUser.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = false;
+				state.user = null;
 				state.isError = true;
 				state.errorMessage = action.payload as string;
 			});

@@ -66,4 +66,4 @@ const ChatItems = (props: any) => {
 	);
 };
 
-export default ChatItems;
+export default React.memo(ChatItems);
