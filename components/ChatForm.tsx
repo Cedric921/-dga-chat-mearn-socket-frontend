@@ -66,4 +66,4 @@ const ChatForm = (props: any) => {
 	);
 };
 
-export default ChatForm;
+export default React.memo(ChatForm);

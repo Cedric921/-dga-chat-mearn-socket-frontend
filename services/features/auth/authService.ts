@@ -32,6 +32,22 @@ const updateImage = async (file: FormData, token: string) => {
 	return res.data;
 };
 
-const authService = { loginUser, registerUser, logout, updateImage };
+const updateUser = async (user: any, token: string) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	const res = await axios.post(`${API_URL}/api/v1/users/image`, user, config);
+	return res.data;
+};
+
+const authService = {
+	loginUser,
+	registerUser,
+	logout,
+	updateImage,
+	updateUser,
+};
 
 export default authService;

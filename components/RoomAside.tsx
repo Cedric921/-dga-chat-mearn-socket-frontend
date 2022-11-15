@@ -19,7 +19,7 @@ const RoomAside = () => {
 	};
 	return (
 		<aside className='hidden relative w-20 bg-gray-900 p-2 text-white md:flex flex-col justify-between'>
-			<div>
+			<div className='cursor-pointer'>
 				<Link href='/auth/profil'>
 					<div className='profile w-full h-12 bg-slate-100 text-gray-800 text-4xl   font-bold rounded-xl flex items-center justify-center'>
 						{user && user.imageUrl ? (
@@ -28,7 +28,7 @@ const RoomAside = () => {
 									src={user.imageUrl}
 									width={'100%'}
 									height='100%'
-									className='w-full h-full rounded-full'
+									className='w-full h-full rounded-xl'
 								/>
 							</div>
 						) : (

@@ -40,4 +40,4 @@ const ChatHeader = (props: any) => {
 	);
 };
 
-export default ChatHeader;
+export default React.memo(ChatHeader);

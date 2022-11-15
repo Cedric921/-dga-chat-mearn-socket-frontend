@@ -6,27 +6,32 @@ import AsideUsers from '../../../components/AsideUsers';
 import Header from '../../../components/mobile/Header';
 import RoomAside from '../../../components/RoomAside';
 import { getUsers } from '../../../services/features/users/usersSlice';
-import { logout, updateImage } from '../../../services/features/auth/authSlice';
+import {
+	logout,
+	updateImage,
+	updateUser,
+} from '../../../services/features/auth/authSlice';
 import { AppDispatch } from '../../../services/store';
 import styles from '../../../styles/Home.module.css';
 import { CiUser } from 'react-icons/ci';
 import Image from 'next/image';
+import { BiLoader, BiLoaderAlt } from 'react-icons/bi';
+import { toast } from 'react-toastify';
+import { iUserInput } from '../../../utils/types';
 
 const profil = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const [image, setImage] = useState<string | Blob>('');
-	const [profileInput, setProfileInput] = useState({
+	const [image, setImage] = useState<any>(null);
+	const [profileInput, setProfileInput] = useState<iUserInput>({
 		name: '',
 		lastname: '',
 		email: '',
 		username: '',
 	});
 	const router = useRouter();
-	const {
-		user,
-		isError: isErrorUser,
-		errorMessage: errorUser,
-	} = useSelector((state: any) => state.auth);
+	const { user, isError, isLoading, isSucess, errorMessage } = useSelector(
+		(state: any) => state.auth
+	);
 
 	const handleChange = (e: any) => {
 		setProfileInput({ ...profileInput, [e.target.name]: e.target.value });
@@ -34,12 +39,14 @@ const profil = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
+		dispatch(updateUser(profileInput));
 	};
 
 	const changeImgProfile = (e: FormEvent) => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append('image', image);
+		console.log(formData);
 		dispatch(updateImage(formData));
 		//
 	};
@@ -47,6 +54,11 @@ const profil = () => {
 	useEffect(() => {
 		dispatch(getUsers());
 	}, []);
+
+	useEffect(() => {
+		if (isError) toast.error(`${errorMessage}`);
+		if (isSucess) toast.success(` updated`);
+	}, [isSucess, isError]);
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -66,32 +78,53 @@ const profil = () => {
 							<div className='flex-1 image_profile flex flex-col gap-4 items-center justify-center'>
 								{/* profile img */}
 								<div className='bg-slate-700 h-40 w-40 sm:h-72 sm:w-72 rounded-full flex items-center justify-center text-9xl text-slate-100'>
-									{user && user.imageUrl ? (
-										<div className='h-full w-full'>
-											<img
-												src={user.imageUrl}
-												width={'100%'}
-												height='100%'
-												className='w-full h-full rounded-full'
-											/>
+									{isLoading ? (
+										<div className='h-full w-full flex items-center justify-center animate-spin'>
+											<BiLoaderAlt className='text-3xl' />
 										</div>
 									) : (
-										<CiUser />
+										<>
+											{user && user.imageUrl ? (
+												<div className='h-full w-full'>
+													<img
+														src={user.imageUrl}
+														width={'100%'}
+														height='100%'
+														className='w-full h-full rounded-full'
+													/>
+												</div>
+											) : (
+												<CiUser />
+											)}
+										</>
 									)}
 								</div>
-								<form onSubmit={changeImgProfile} className='w-full '>
+								<form
+									onSubmit={changeImgProfile}
+									className='w-full'
+									encType='multipart/form-data'
+								>
 									<input
 										type='file'
 										name='image'
 										id=''
 										className='w-1/2 text-slate-100 p-2 mx-auto'
-										onChange={(e) => setImage(e.target.value)}
+										onChange={(e) => {
+											console.log(e.target.files![0]);
+											setImage(e.target.files![0]);
+										}}
 									/>
 									<button
 										type='submit'
 										className='w-full md:w-40  p-2 bg-blue-900 hover:animate-pulse m-2 mt-4 px-8 text-slate-100 rounded-sm '
 									>
-										Update
+										{isLoading ? (
+											<div className='w-full flex justify-center'>
+												<BiLoader className='animate-spin' />
+											</div>
+										) : (
+											<>Update</>
+										)}
 									</button>
 								</form>
 							</div>
