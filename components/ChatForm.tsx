@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	addMessage,
 	getMessages,
+	getUsersMessages,
 } from '../services/features/messages/messageSlice';
 import { AppDispatch } from '../services/store';
 
 const ChatForm = (props: any) => {
 	const [messageInput, setMessageInput] = useState('');
 	const dispatch = useDispatch<AppDispatch>();
-	const { user } = useSelector((state: any) => state.auth);
 
 	const handleChange = (e: any) => {
 		setMessageInput(e.target.value);
@@ -27,6 +27,7 @@ const ChatForm = (props: any) => {
 		const receiverID: string = props.receiver._id;
 		dispatch(addMessage({ formData, receiverID }));
 		dispatch(getMessages(receiverID));
+		dispatch(getUsersMessages());
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
