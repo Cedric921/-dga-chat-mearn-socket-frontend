@@ -20,18 +20,18 @@ import { toast } from 'react-toastify';
 import { iUserInput } from '../../../utils/types';
 
 const profil = () => {
-	const dispatch = useDispatch<AppDispatch>();
-	const [image, setImage] = useState<any>(null);
-	const [profileInput, setProfileInput] = useState<iUserInput>({
-		name: '',
-		lastname: '',
-		email: '',
-		username: '',
-	});
-	const router = useRouter();
 	const { user, isError, isLoading, isSucess, errorMessage } = useSelector(
 		(state: any) => state.auth
 	);
+	const dispatch = useDispatch<AppDispatch>();
+	const [image, setImage] = useState<any>(null);
+	const [profileInput, setProfileInput] = useState<iUserInput>({
+		name: user?.name ?? '',
+		lastname: user?.lastname ?? '',
+		email: user?.email ?? '',
+		username: user?.username ?? '',
+	});
+	const router = useRouter();
 
 	const handleChange = (e: any) => {
 		setProfileInput({ ...profileInput, [e.target.name]: e.target.value });
@@ -140,7 +140,7 @@ const profil = () => {
 												type='text'
 												id='name'
 												name='name'
-												value={user ? user.name : ''}
+												value={profileInput.name}
 												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
@@ -151,7 +151,7 @@ const profil = () => {
 												type='text'
 												id='lastname'
 												name='lastname'
-												value={user ? user.lastname : ''}
+												value={profileInput.lastname}
 												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
@@ -167,7 +167,7 @@ const profil = () => {
 												type='email'
 												id='email'
 												name='email'
-												value={user ? user.email : ''}
+												value={profileInput.email}
 												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600'
 												onChange={handleChange}
 											/>
@@ -178,7 +178,7 @@ const profil = () => {
 												type='text'
 												id='username'
 												name='username'
-												value={user ? user.username : ''}
+												value={profileInput.username}
 												className='w-full p-2 rounded-sm text-slate-300 bg-slate-600 '
 												onChange={handleChange}
 											/>

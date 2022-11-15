@@ -1,4 +1,8 @@
-import { iUserSignupInput, iUserLoginInput } from '../../../utils/types';
+import {
+	iUserSignupInput,
+	iUserLoginInput,
+	iUserInput,
+} from '../../../utils/types';
 import axios from 'axios';
 
 // api
@@ -32,7 +36,7 @@ const updateImage = async (file: FormData, token: string) => {
 	return res.data;
 };
 
-const updateUser = async (user: any, token: string) => {
+const updateUser = async (user: iUserInput, token: string) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
