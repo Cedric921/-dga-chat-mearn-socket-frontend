@@ -24,7 +24,9 @@ const ChatItems = (props: any) => {
 											{new Date(msg.updatedAt).toLocaleTimeString()}
 										</h6>
 									</div>
-									<p className='text-sm md:text-lg'>{msg.content} ...</p>
+									<p className='text-sm md:text-lg w-full h-max p-1'>
+										{msg.content}
+									</p>
 								</div>
 							) : (
 								<div className='p-2 bg-slate-700 w-max max-w-full rounded-2xl rounded-bl-none m-2 self-start'>

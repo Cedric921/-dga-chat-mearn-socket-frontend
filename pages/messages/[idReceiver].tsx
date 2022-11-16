@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages } from '../../services/features/messages/messageSlice';
+import {
+	getMessages,
+	getUsersMessages,
+} from '../../services/features/messages/messageSlice';
 import { getUsers } from '../../services/features/users/usersSlice';
 import { AppDispatch } from '../../services/store';
 import RoomAside from '../../components/RoomAside';
@@ -14,20 +17,12 @@ import ChatHeader from '../../components/ChatHeader';
 import { io } from 'socket.io-client';
 
 const Messages = (props: any) => {
-	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
-	const { messages, isError, isSuccess, isLoading, messageError } = useSelector(
-		(state: any) => state.messages
-	);
+	const { messages, isError } = useSelector((state: any) => state.messages);
 
 	useEffect(() => {
-		dispatch(getUsers());
-	}, [messages]);
-
-	useEffect(() => {
-		dispatch(getUsers());
 		dispatch(getMessages(props.user._id));
-	}, [props.user]);
+	}, [dispatch]);
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
@@ -38,7 +33,7 @@ const Messages = (props: any) => {
 				dispatch(getMessages(props.user._id));
 			}
 		});
-	}, [messages]);
+	}, [dispatch]);
 
 	return (
 		<>
