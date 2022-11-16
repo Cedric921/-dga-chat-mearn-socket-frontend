@@ -55,7 +55,7 @@ const Messages = (props: any) => {
 						<ChatHeader user={props.user} />
 
 						{/* display messages */}
-						{!isLoading ? (
+						{isLoading ? (
 							<Message />
 						) : (
 							<>
