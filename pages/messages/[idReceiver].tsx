@@ -15,14 +15,17 @@ import ChatForm from '../../components/ChatForm';
 import ChatItems from '../../components/ChatItems';
 import ChatHeader from '../../components/ChatHeader';
 import { io } from 'socket.io-client';
+import Message from '../../components/skeleton/Message';
 
 const Messages = (props: any) => {
 	const dispatch = useDispatch<AppDispatch>();
-	const { messages, isError } = useSelector((state: any) => state.messages);
+	const { messages, isLoading, isError } = useSelector(
+		(state: any) => state.messages
+	);
 
 	useEffect(() => {
 		dispatch(getMessages(props.user._id));
-	}, [dispatch]);
+	}, []);
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
@@ -52,11 +55,17 @@ const Messages = (props: any) => {
 						<ChatHeader user={props.user} />
 
 						{/* display messages */}
-						<ChatItems
-							messages={messages}
-							receiver={props.user}
-							isError={isError}
-						/>
+						{!isLoading ? (
+							<Message />
+						) : (
+							<>
+								<ChatItems
+									messages={messages}
+									receiver={props.user}
+									isError={isError}
+								/>
+							</>
+						)}
 
 						{/* send message input */}
 						<ChatForm receiver={props.user} />
