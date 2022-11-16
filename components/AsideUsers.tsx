@@ -12,27 +12,18 @@ import { AppDispatch } from '../services/store';
 const AsideUsers = () => {
 	const { user: connectedUser } = useSelector((state: any) => state.auth);
 	const dispatch = useDispatch<AppDispatch>();
-	const {
-		users,
-		isError: isErrorUsers,
-		errorMessage: errorUsers,
-	} = useSelector((state: any) => state.users);
-	const {
-		users: usersMessages,
-		isError: errMess,
-		errorMessage: errorMess,
-	} = useSelector((state: any) => state.messages);
+	const { users } = useSelector((state: any) => state.users);
+	const { users: usersMessages } = useSelector((state: any) => state.messages);
 
 	useEffect(() => {
 		dispatch(getUsersMessages());
-		dispatch(getUsers());
 	}, []);
 
 	return (
 		<div className='hidden sm:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
 			<div className='users min-w-max overflow-y-scroll'>
 				<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>Messages</h2>
-				{usersMessages ? (
+				{usersMessages && usersMessages.length > 0 ? (
 					<div className=''>
 						{usersMessages.map((user: any) => (
 							<div key={user._id}>
@@ -77,7 +68,7 @@ const AsideUsers = () => {
 						))}
 					</div>
 				) : (
-					<p>vous n'avez pas encore des conversations</p>
+					<p className='text-gray-400 pl-2'> pas encore des messages</p>
 				)}
 				<div className=''>
 					{users ? (

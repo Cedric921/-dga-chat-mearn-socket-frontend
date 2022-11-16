@@ -31,6 +31,9 @@ const Header = () => {
 					</Link>
 				)}
 			</div>
+			<div>
+				<h2 className='text-slate-100 font-extrabold'>cryptoChat</h2>
+			</div>
 			<button
 				className=' bottom-2 left-2 w-12 h-12 bg-slate-300 hover:bg-red-700 hover:text-white text-red-700 duration-700 animate-pulse rounded-xl text-red	-900 flex items-center justify-center'
 				onClick={logoutUser}

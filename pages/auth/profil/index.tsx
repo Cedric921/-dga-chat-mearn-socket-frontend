@@ -46,9 +46,7 @@ const profil = () => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append('image', image);
-		console.log(formData);
 		dispatch(updateImage(formData));
-		//
 	};
 
 	useEffect(() => {

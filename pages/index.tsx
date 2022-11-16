@@ -23,27 +23,18 @@ export default function Home() {
 		isError: isErrorUser,
 		errorMessage: errorUser,
 	} = useSelector((state: any) => state.auth);
-	const {
-		messages,
-		isError: isErrorMessages,
-		errorMessage: errorMessages,
-	} = useSelector((state: any) => state.messages);
+	const { isError: isErrorMessages, errorMessage: errorMessages } = useSelector(
+		(state: any) => state.messages
+	);
 
-	const {
-		users,
-		isError: isErrorUsers,
-		errorMessage: errorUsers,
-	} = useSelector((state: any) => state.users);
+	const { isError: isErrorUsers, errorMessage: errorUsers } = useSelector(
+		(state: any) => state.users
+	);
 
 	useEffect(() => {
 		if (!user) router.push('/auth/login');
 		if (user) dispatch(getUsers());
 	}, [user, dispatch]);
-
-	const logoutUser = () => {
-		dispatch(logout());
-		router.replace('/auth/login');
-	};
 
 	useEffect(() => {
 		if (isErrorMessages) toast.dark(errorMessages);
