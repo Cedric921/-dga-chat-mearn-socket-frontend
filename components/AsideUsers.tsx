@@ -93,7 +93,7 @@ const AsideUsers = () => {
 				)}
 				<div className='w-full'>
 					{isLoading ? (
-						<div className='flex flex-wrap flex-col justify-end items-end text-slate-100 h-full w-full p-2'>
+						<div className='flex flex-wrap flex-col justify-end items-end text-slate-100 w-full p-2'>
 							<h2 className='text-2xl ml-2 font-extrabold text-blue-400 pt-2 self-start'>
 								Contacts
 							</h2>
