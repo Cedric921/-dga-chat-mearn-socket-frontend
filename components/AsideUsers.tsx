@@ -27,8 +27,8 @@ const AsideUsers = () => {
 		<div className='hidden sm:flex top-2 bottom-2  w-80 bg-slate-700 rounded-none p-2 pt-4 ml-0 mr-0 my-0  flex-col '>
 			<div className='users min-w-max overflow-y-scroll'>
 				<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>Messages</h2>
-				{isLoadingMsg ? (
-					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2'>
+				{!isLoadingMsg ? (
+					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2 skeleton'>
 						<User />
 						<User />
 						<User />
@@ -92,7 +92,7 @@ const AsideUsers = () => {
 					</>
 				)}
 				<div className='w-full'>
-					{isLoading ? (
+					{!isLoading ? (
 						<div className='flex flex-wrap flex-col justify-end items-end text-slate-100 w-full p-2'>
 							<h2 className='text-2xl ml-2 font-extrabold text-blue-400 pt-2 self-start'>
 								Contacts
