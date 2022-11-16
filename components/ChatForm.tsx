@@ -38,14 +38,14 @@ const ChatForm = (props: any) => {
 		<div className='absolute bottom-0 left-0 right-0 bg-slate-600 text-slate-100 rounded-b-xl p-0 sm:p-2 min-h-max'>
 			<form
 				onSubmit={handleSubmit}
-				className='flex justify-between items-center min-h-max h-24 sm:h-14'
+				className='flex justify-between items-center min-h-max h-16 sm:h-14'
 			>
 				{/* <span>icon</span> */}
-				<div className='bg-slate-400 flex items-center w-full h-full mx-0    rounded-none sm:rounded-xl'>
+				<div className='bg-slate-400 flex items-center w-full h-full mx-0    rounded-xl'>
 					<textarea
 						name=''
 						id=''
-						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-slate-400 m-0 text-slate-900 px-2 box-border'
+						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-gray-600 m-0 text-slate-900 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
 						onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {

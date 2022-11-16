@@ -1,9 +1,17 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { VscChevronLeft } from 'react-icons/vsc';
+import { useDispatch } from 'react-redux';
+import { getMessages } from '../services/features/messages/messageSlice';
+import { AppDispatch } from '../services/store';
 
 const ChatHeader = (props: any) => {
+	const dispatch = useDispatch<AppDispatch>();
+
+	useEffect(() => {
+		dispatch(getMessages(props.user._id));
+	}, [props]);
 	return (
 		<div className=' w-full bg-slate-800 rounded-t-xl p-2 flex items-center gap-2 text-white'>
 			<div className='rounded-full bg-slate-800 hover:bg-slate-600 transition-all duration-700 w-12 h-12 flex justify-center items-center cursor-pointer  text-2xl'>
