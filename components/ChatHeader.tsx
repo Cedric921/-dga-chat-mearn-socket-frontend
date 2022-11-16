@@ -20,7 +20,7 @@ const ChatHeader = (props: any) => {
 				</Link>
 			</div>
 
-			<div className='rounded-full w-16 h-16 border-slate-100 flex items-center justify-center'>
+			<div className='rounded-full w-14 h-14 border-slate-100 flex items-center justify-center'>
 				{props.user && props.user.imageUrl != undefined ? (
 					<div className='h-full w-full flex items-center justify-center'>
 						<img

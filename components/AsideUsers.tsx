@@ -28,7 +28,7 @@ const AsideUsers = () => {
 			<div className='users min-w-max overflow-y-scroll'>
 				<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>Messages</h2>
 				{isLoadingMsg ? (
-					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2'>
+					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2 skeleton'>
 						<User />
 						<User />
 						<User />
