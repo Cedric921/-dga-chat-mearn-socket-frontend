@@ -45,7 +45,7 @@ const ChatForm = (props: any) => {
 					<textarea
 						name=''
 						id=''
-						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-gray-600 m-0 text-slate-900 px-2 box-border'
+						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-gray-600 sm:bg-slate-800 m-0 text-slate-900 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
 						onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
