@@ -26,8 +26,7 @@ const ChatForm = (props: any) => {
 		formData.append('content', messageInput);
 		const receiverID: string = props.receiver._id;
 		dispatch(addMessage({ formData, receiverID }));
-		dispatch(getMessages(receiverID));
-		dispatch(getUsersMessages());
+		dispatch(getMessages(props.receiver._id));
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -45,7 +44,7 @@ const ChatForm = (props: any) => {
 					<textarea
 						name=''
 						id=''
-						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-gray-600 sm:bg-slate-800 m-0 text-slate-900 px-2 box-border'
+						className='w-full h-full rounded-none sm:rounded-l-xl focus:outline-none bg-gray-600 sm:bg-slate-800 m-0 text-gray-300 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
 						onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -59,9 +58,6 @@ const ChatForm = (props: any) => {
 						<MdSend />
 					</button>
 				</div>
-				<button className='w-14 h-14 ml-2 hidden sm:flex bg-slate-900 text-slate-200  justify-center items-center text-2xl rounded-full animate-pulse hover:shadow-xl'>
-					<BiImageAdd />
-				</button>
 			</form>
 		</div>
 	);

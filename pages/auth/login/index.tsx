@@ -82,6 +82,7 @@ const loginPage: NextPage = () => {
 								</div>
 								<button
 									className='flex md:hidden border-blue-700 py-2 px-5 rounded-md text-blue-700 w-full md:w-1/2 bg-slate-100 border-2 text-center justify-center items-center'
+									type='reset'
 									onClick={() => router.push('/auth/signup')}
 								>
 									<span>Crrer un compte</span>

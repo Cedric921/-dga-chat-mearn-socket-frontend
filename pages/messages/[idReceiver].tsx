@@ -16,24 +16,22 @@ import ChatItems from '../../components/ChatItems';
 import ChatHeader from '../../components/ChatHeader';
 import { io } from 'socket.io-client';
 import Message from '../../components/skeleton/Message';
+import { iUser } from '../../utils/types';
 
-const Messages = (props: any) => {
+const Messages = ({ user }: { user: iUser }) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const { messages, isLoading, isError } = useSelector(
 		(state: any) => state.messages
 	);
 
 	useEffect(() => {
-		dispatch(getMessages(props.user._id));
-	}, []);
-
-	useEffect(() => {
+		console.log(' ===>messages [id] useEffect');
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
 
 		socket.on('messages', (data) => {
 			console.log(data);
 			if (data.action == 'create') {
-				dispatch(getMessages(props.user._id));
+				dispatch(getMessages(user._id));
 			}
 		});
 	}, [dispatch]);
@@ -52,7 +50,7 @@ const Messages = (props: any) => {
 				<div className='flex flex-col w-full m-0 p-0 relative'>
 					<div className='absolute top-0 bottom-0 left-0 right-0   bg-gray-900 rounded-xl p-0 m-0 sm:m-2 flex flex-col'>
 						{/* header */}
-						<ChatHeader user={props.user} />
+						<ChatHeader user={user} />
 
 						{/* display messages */}
 						{isLoading ? (
@@ -61,14 +59,14 @@ const Messages = (props: any) => {
 							<>
 								<ChatItems
 									messages={messages}
-									receiver={props.user}
+									receiver={user}
 									isError={isError}
 								/>
 							</>
 						)}
 
 						{/* send message input */}
-						<ChatForm receiver={props.user} />
+						<ChatForm receiver={user} />
 					</div>
 				</div>
 			</main>

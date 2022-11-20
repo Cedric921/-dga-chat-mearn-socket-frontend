@@ -19,6 +19,8 @@ const AsideUsers = () => {
 	);
 
 	useEffect(() => {
+		console.log(' ===>aside user useEffect');
+
 		dispatch(getUsersMessages());
 		dispatch(getUsers());
 	}, []);
@@ -83,7 +85,7 @@ const AsideUsers = () => {
 								))}
 							</div>
 						) : (
-							<div className='flex flex-wrap flex-col justify-end items-end text-slate-100 h-full w-full p-2 pb-20'>
+							<div className='flex flex-wrap flex-col justify-end items-end text-slate-100 w-full p-2 pb-20'>
 								<User />
 								<User />
 								<User />

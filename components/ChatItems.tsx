@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux';
 
 const ChatItems = (props: any) => {
 	const { user } = useSelector((state: any) => state.auth);
-	// const [messages, setMessages] = useState(props.messages);
+
+	useEffect(() => {
+		console.table(props.messages);
+		console.log(' ===>chat items useEffect');
+	}, []);
 
 	return (
 		<div className='p-4 text-white overflow-y-scroll'>
@@ -16,8 +20,8 @@ const ChatItems = (props: any) => {
 								<div className='p-4 bg-blue-900 w-max   max-w-full rounded-2xl rounded-br-none m-2 self-end'>
 									<div className='w-full flex items-center justify-between mb-2'>
 										<h6 className='text-xs text-slate-400'>
-											<span>{user && user.name}</span>{' '}
-											<span>{user && user.lastname}</span>
+											<span>{msg.sender && msg.sender.name}</span>{' '}
+											<span>{msg.sender && msg.sender.lastname}</span>
 										</h6>
 										<span className='text-blue-900'> __ </span>
 										<h6 className='text-xs  text-slate-400'>

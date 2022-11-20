@@ -41,13 +41,11 @@ const addMessage = async (
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	console.log(content, receiverId, token);
 	const res = await axios.post(
 		`${API_URL}/api/v1/messages/${receiverId}`,
 		content,
 		config
 	);
-	console.log(res.data);
 	return res.data;
 };
 

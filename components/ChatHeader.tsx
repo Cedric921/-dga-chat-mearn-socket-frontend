@@ -11,6 +11,7 @@ const ChatHeader = (props: any) => {
 
 	useEffect(() => {
 		dispatch(getMessages(props.user._id));
+		console.log(' ===>chat Header useEffect');
 	}, [props]);
 	return (
 		<div className=' w-full bg-slate-800 rounded-t-xl p-2 flex items-center gap-2 text-white'>
