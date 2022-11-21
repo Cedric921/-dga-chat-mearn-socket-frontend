@@ -25,7 +25,7 @@ const AsideUsers = () => {
 			<div className='users h-full min-w-max overflow-y-scroll'>
 				{isLoadingMsg ? (
 					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2'>
-						<h2 className='text-2xl ml-2 font-extrabold text-blue-400 self-start'>
+						<h2 className='text-2xl ml-2 font-extrabold text-blue-400 self-start sticky top-0 z-[100] bg-gray-900'>
 							Messages
 						</h2>
 						<User />
@@ -36,7 +36,7 @@ const AsideUsers = () => {
 					<>
 						{usersMessages ? (
 							<div className=''>
-								<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>
+								<h2 className='text-2xl ml-2 font-extrabold text-blue-400 sticky top-0 z-[100] bg-gray-900'>
 									Messages
 								</h2>
 
@@ -92,7 +92,7 @@ const AsideUsers = () => {
 				)}
 				{isLoading ? (
 					<div className='flex flex-wrap flex-col justify-end items-end text-slate-100  w-full p-2'>
-						<h2 className='text-2xl ml-2 font-extrabold text-blue-400 self-start'>
+						<h2 className='text-2xl ml-2 font-extrabold text-blue-400 self-start sticky top-0 z-[100] bg-gray-900'>
 							Contacts
 						</h2>
 						<User />
@@ -103,7 +103,7 @@ const AsideUsers = () => {
 					<>
 						{users ? (
 							<div className=''>
-								<h2 className='text-2xl ml-2 font-extrabold text-blue-400'>
+								<h2 className='text-2xl ml-2 font-extrabold text-blue-400 sticky top-0 z-[100] bg-gray-900'>
 									Contacts
 								</h2>
 

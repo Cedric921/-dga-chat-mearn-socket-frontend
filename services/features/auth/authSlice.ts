@@ -12,9 +12,6 @@ let user;
 if (typeof window !== 'undefined') {
 	if (localStorage.getItem('chat-gda-user')) {
 		user = JSON.parse(localStorage.getItem('chat-gda-user')!);
-		user.imageUrl = user.imageUrl
-			? process.env.NEXT_PUBLIC_BACKEND_URI + user.imageUrl
-			: null;
 	} else {
 		user = null;
 	}
@@ -127,9 +124,6 @@ const authSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.user = action.payload;
-				state.user.imageUrl = state.user.imageUrl
-					? process.env.NEXT_PUBLIC_BACKEND_URI + state.user.imageUrl
-					: null;
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.isLoading = false;
@@ -148,9 +142,6 @@ const authSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.user = action.payload;
-				state.user.imageUrl = state.user.imageUrl
-					? process.env.NEXT_PUBLIC_BACKEND_URI + state.user.imageUrl
-					: null;
 			})
 			.addCase(register.rejected, (state, action) => {
 				state.isLoading = false;
@@ -173,9 +164,6 @@ const authSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.user = action.payload;
-				state.user.imageUrl = action.payload.imageUrl
-					? process.env.NEXT_PUBLIC_BACKEND_URI + action.payload.imageUrl
-					: null;
 				localStorage.setItem('chat-gda-user', JSON.stringify(state.user));
 			})
 			.addCase(updateImage.rejected, (state, action) => {
@@ -194,9 +182,6 @@ const authSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.user = action.payload;
-				state.user.imageUrl = state.user.imageUrl
-					? process.env.NEXT_PUBLIC_BACKEND_URI + state.user.imageUrl
-					: null;
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.isLoading = false;
