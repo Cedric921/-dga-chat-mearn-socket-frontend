@@ -14,9 +14,10 @@ import {
 } from '../services/features/messages/messageSlice';
 import { AppDispatch } from '../services/store';
 
-const ChatForm = (props: any) => {
+const ChatForm = () => {
 	const [messageInput, setMessageInput] = useState('');
 	const dispatch = useDispatch<AppDispatch>();
+	const { contact } = useSelector((state: any) => state.contact);
 
 	const handleChange = (e: any) => {
 		setMessageInput(e.target.value);
@@ -24,15 +25,14 @@ const ChatForm = (props: any) => {
 	const handleSend = () => {
 		const formData = new FormData();
 		formData.append('content', messageInput);
-		const receiverID: string = props.receiver._id;
+		const receiverID: string = contact._id;
 		dispatch(addMessage({ formData, receiverID }));
-		dispatch(getMessages(receiverID));
-		dispatch(getUsersMessages());
+		setMessageInput('');
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		handleSend();
-		setMessageInput('');
+		dispatch(getUsersMessages());
 	};
 	return (
 		<div className='absolute bottom-0 left-0 right-0 bg-slate-600 text-slate-100 rounded-b-xl p-0 sm:p-2 min-h-max'>
@@ -45,7 +45,7 @@ const ChatForm = (props: any) => {
 					<textarea
 						name=''
 						id=''
-						className='w-full h-full rounded-none sm:rounded-l-xl focus:border-0 bg-gray-600 sm:bg-slate-800 m-0 text-slate-900 px-2 box-border'
+						className='w-full h-full rounded-none sm:rounded-l-xl focus:outline-none bg-gray-600 sm:bg-slate-800 m-0 text-gray-300 px-2 box-border'
 						value={messageInput}
 						onChange={handleChange}
 						onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -59,9 +59,6 @@ const ChatForm = (props: any) => {
 						<MdSend />
 					</button>
 				</div>
-				<button className='w-14 h-14 ml-2 hidden sm:flex bg-slate-900 text-slate-200  justify-center items-center text-2xl rounded-full animate-pulse hover:shadow-xl'>
-					<BiImageAdd />
-				</button>
 			</form>
 		</div>
 	);

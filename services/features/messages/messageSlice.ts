@@ -117,8 +117,8 @@ const messageSlice = createSlice({
 			})
 			.addCase(getUsersMessages.fulfilled, (state, action) => {
 				let data: any[] = [];
-				const users = action.payload.map((ele: any) => {
-					return ele.users.map((user: any) => {
+				action.payload.map((ele: any) => {
+					ele.users.map((user: any) => {
 						const u = {
 							_id: user._id,
 							name: user.name,
@@ -129,7 +129,6 @@ const messageSlice = createSlice({
 							imageUrl: ele.imageUrl,
 						};
 						data.push(u);
-						return u;
 					});
 				});
 
@@ -137,10 +136,10 @@ const messageSlice = createSlice({
 					(val: any, i: number, self: any) =>
 						self.findIndex((m: any) => m.name === val.name) === i
 				);
-				console.log('users', filteredUsers);
 				state.isLoading = false;
-				state.users = filteredUsers;
+				state.users = filteredUsers.reverse();
 				state.isSuccess = true;
+				state.messages = state.messages;
 			})
 			.addCase(getUsersMessages.rejected, (state, action) => {
 				state.isLoading = false;
