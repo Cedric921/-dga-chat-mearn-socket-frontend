@@ -32,7 +32,9 @@ const RoomAside = () => {
 								/>
 							</div>
 						) : (
-							<CiUser />
+							<div>
+								<CiUser />
+							</div>
 						)}
 					</div>
 				</Link>

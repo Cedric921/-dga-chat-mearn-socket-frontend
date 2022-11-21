@@ -14,9 +14,10 @@ import {
 } from '../services/features/messages/messageSlice';
 import { AppDispatch } from '../services/store';
 
-const ChatForm = (props: any) => {
+const ChatForm = () => {
 	const [messageInput, setMessageInput] = useState('');
 	const dispatch = useDispatch<AppDispatch>();
+	const { contact } = useSelector((state: any) => state.contact);
 
 	const handleChange = (e: any) => {
 		setMessageInput(e.target.value);
@@ -24,14 +25,14 @@ const ChatForm = (props: any) => {
 	const handleSend = () => {
 		const formData = new FormData();
 		formData.append('content', messageInput);
-		const receiverID: string = props.receiver._id;
+		const receiverID: string = contact._id;
 		dispatch(addMessage({ formData, receiverID }));
-		dispatch(getMessages(props.receiver._id));
+		setMessageInput('');
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		handleSend();
-		setMessageInput('');
+		dispatch(getUsersMessages());
 	};
 	return (
 		<div className='absolute bottom-0 left-0 right-0 bg-slate-600 text-slate-100 rounded-b-xl p-0 sm:p-2 min-h-max'>

@@ -137,7 +137,7 @@ const messageSlice = createSlice({
 						self.findIndex((m: any) => m.name === val.name) === i
 				);
 				state.isLoading = false;
-				state.users = filteredUsers;
+				state.users = filteredUsers.reverse();
 				state.isSuccess = true;
 				state.messages = state.messages;
 			})

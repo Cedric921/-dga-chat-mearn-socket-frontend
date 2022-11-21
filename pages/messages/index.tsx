@@ -18,23 +18,30 @@ import { io } from 'socket.io-client';
 import Message from '../../components/skeleton/Message';
 import { iUser } from '../../utils/types';
 
-const Messages = ({ user }: { user: iUser }) => {
+const Messages = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const { messages, isLoading, isError } = useSelector(
-		(state: any) => state.messages
-	);
+	const router = useRouter();
+	const { isLoading, isError } = useSelector((state: any) => state.messages);
+	const { contact } = useSelector((state: any) => state.contact);
+
+	useEffect(() => {
+		console.log(contact);
+		if (!contact) router.replace('/');
+	}, [contact]);
 
 	useEffect(() => {
 		console.log(' ===>messages [id] useEffect');
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
 
-		socket.on('messages', (data) => {
-			console.log(data);
-			if (data.action == 'create') {
-				dispatch(getMessages(user._id));
-			}
-		});
-	}, [dispatch]);
+		if (!contact) router.replace('/');
+		else {
+			socket.on('messages', (data) => {
+				if (data.action == 'create') {
+					dispatch(getMessages(contact && contact?._id));
+				}
+			});
+		}
+	}, [dispatch, contact]);
 
 	return (
 		<>
@@ -50,23 +57,19 @@ const Messages = ({ user }: { user: iUser }) => {
 				<div className='flex flex-col w-full m-0 p-0 relative'>
 					<div className='absolute top-0 bottom-0 left-0 right-0   bg-gray-900 rounded-xl p-0 m-0 sm:m-2 flex flex-col'>
 						{/* header */}
-						<ChatHeader user={user} />
+						<ChatHeader />
 
 						{/* display messages */}
 						{isLoading ? (
 							<Message />
 						) : (
 							<>
-								<ChatItems
-									messages={messages}
-									receiver={user}
-									isError={isError}
-								/>
+								<ChatItems />
 							</>
 						)}
 
 						{/* send message input */}
-						<ChatForm receiver={user} />
+						<ChatForm />
 					</div>
 				</div>
 			</main>
@@ -74,32 +77,4 @@ const Messages = ({ user }: { user: iUser }) => {
 	);
 };
 
-export const getStaticProps = async (context: any) => {
-	const API_BACKEND = process.env.NEXT_PUBLIC_BACKEND_URI!;
-	const res = await axios.get(
-		`${API_BACKEND}/api/v1/users/${context.params.idReceiver}`
-	);
-	const user = res.status === 200 ? res.data.user : null;
-
-	return {
-		props: {
-			user: user,
-		},
-		revalidate: 60,
-	};
-};
-
-export const getStaticPaths = async () => {
-	const API_BACKEND = process.env.NEXT_PUBLIC_BACKEND_URI!;
-	const res = await axios.get(`${API_BACKEND}/api/v1/users`);
-	const users = res.data;
-	const ids = users.users.map((user: any) => ({
-		params: { idReceiver: user._id.toString() },
-	}));
-	return {
-		paths: [...ids],
-		fallback: true,
-	};
-};
-
-export default React.memo(Messages);
+export default Messages;
