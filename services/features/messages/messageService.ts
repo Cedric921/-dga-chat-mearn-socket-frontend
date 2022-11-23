@@ -43,7 +43,7 @@ const addMessage = async (
 	};
 	const res = await axios.post(
 		`${API_URL}/api/v1/messages/${receiverId}`,
-		content,
+		{ content },
 		config
 	);
 	return res.data;
