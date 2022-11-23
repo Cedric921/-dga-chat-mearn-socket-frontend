@@ -22,11 +22,9 @@ const ChatForm = () => {
 	const handleChange = (e: any) => {
 		setMessageInput(e.target.value);
 	};
-	const handleSend = () => {
-		const formData = new FormData();
-		formData.append('content', messageInput);
+	const handleSend = async () => {
 		const receiverID: string = contact._id;
-		dispatch(addMessage({ formData, receiverID }));
+		await dispatch(addMessage({ content: messageInput, receiverID }));
 		setMessageInput('');
 	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
