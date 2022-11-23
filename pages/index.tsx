@@ -33,7 +33,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (!user) router.push('/auth/login');
-		if (user) dispatch(getUsers());
+		else dispatch(getUsers());
 	}, [user, dispatch]);
 
 	useEffect(() => {

@@ -30,7 +30,6 @@ const Messages = () => {
 	}, [contact]);
 
 	useEffect(() => {
-		console.log(' ===>messages [id] useEffect');
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI!);
 
 		if (!contact) router.replace('/');

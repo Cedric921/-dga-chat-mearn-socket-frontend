@@ -52,10 +52,7 @@ const AsideUsers = () => {
 														{user && user.imageUrl != undefined ? (
 															<div className='h-full w-full'>
 																<img
-																	src={
-																		process.env.NEXT_PUBLIC_BACKEND_URI +
-																		user.imageUrl
-																	}
+																	src={user.imageUrl}
 																	width={'100%'}
 																	height='100%'
 																	className='w-full h-full rounded-full'
@@ -119,10 +116,7 @@ const AsideUsers = () => {
 														{user && user.imageUrl != undefined ? (
 															<div className='h-full w-full'>
 																<img
-																	src={
-																		process.env.NEXT_PUBLIC_BACKEND_URI +
-																		user.imageUrl
-																	}
+																	src={user.imageUrl}
 																	width={'100%'}
 																	height='100%'
 																	className='w-full h-full rounded-full'
